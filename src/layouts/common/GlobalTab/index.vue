@@ -5,7 +5,6 @@
         <tab-detail @scroll="handleScroll" />
       </better-scroll>
     </div>
-    <reload-button />
   </dark-mode-container>
 </template>
 
@@ -15,7 +14,7 @@ import { useRoute } from 'vue-router';
 import { useElementBounding } from '@vueuse/core';
 import { useThemeStore, useTabStore } from '@/store';
 import { useDeviceInfo } from '@/composables';
-import { TabDetail, ReloadButton } from './components';
+import { TabDetail } from './components';
 
 const route = useRoute();
 const theme = useThemeStore();
