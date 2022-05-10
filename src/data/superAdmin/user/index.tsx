@@ -1,19 +1,36 @@
-import { DataTableColumn, NTag } from 'naive-ui/lib/components';
 import './user.css'
-
 import { EnumUserRole } from '@/enum/business'
-import { NButton } from 'naive-ui';
-import { h, Ref, ref } from 'vue';
+import { ref } from 'vue';
+import { useTable } from '@/data/utils/useTable'
 import { InternalRowData } from 'naive-ui/lib/data-table/src/interface';
-import ShowOrEdit from '@/data/utils/ShowOrEdit';
+import { ColumnSrcItem } from '@/data/utils/creator';
+import { NTag } from 'naive-ui';
 
-function actionRender() {
-  return (
-    <div class="flex justify-evenly" >
-      <NButton secondary strong type="error">删除</NButton>
-    </div>
-  )
-}
+const columnSrc: ColumnSrcItem[] = [
+  {
+    title: '用户名',
+    key: 'username',
+  },
+  {
+    title: '电话号码',
+    key: 'phone',
+  },
+  {
+    title: '邮箱',
+    key: 'email',
+  },
+  {
+    title: '工厂名/经销商代号',
+    key: 'name',
+  },
+  {
+    title: '角色',
+    key: 'role',
+    renderer: (row: InternalRowData) => {
+      return (<NTag type={switchColor(row.role as string)}>{row.role}</NTag>)
+    }
+  },
+]
 
 function switchColor(role: string) {
   switch (role) {
@@ -32,7 +49,7 @@ function createUsers() {
     username: 'admin',
     phone: '16666666666',
     email: "chengdx0925@126.com",
-    createTime: '2019-01-01',
+    name: 'super admin',
     role: EnumUserRole.super,
   })
 
@@ -44,67 +61,19 @@ function createUsers() {
       username,
       phone,
       email,
-      createTime: '2019-01-01',
-      role: i % 2 === 0 ? EnumUserRole.admin : EnumUserRole.dealer,
+      name: `${username}的${i % 2 == 0 ? '工厂' : '店铺'}`,
+      role: i % 2 == 0 ? EnumUserRole.admin : EnumUserRole.dealer,
     })
   }
-  return ref(users)
-}
-
-
-function createRenderFn(columnLabel: string, data: Ref<any>, valueRenderer?: Function) {
-  return function render(row: InternalRowData, index: number) {
-    return h(ShowOrEdit, {
-      value: valueRenderer ? valueRenderer : row[columnLabel],
-      onUpdateValue(v: any) {
-        data.value[index][columnLabel] = v
-      }
-    })
-  }
+  return users
 }
 
 export function useUsers() {
-  const data = createUsers()
-  const columns = ref<DataTableColumn[]>([
-    {
-      title: '用户名',
-      key: 'username',
-      align: 'center',
-      render: createRenderFn('username', data)
-    },
-    {
-      title: '电话号码',
-      key: 'phone',
-      align: 'center',
-      render: createRenderFn('phone', data)
-    },
-    {
-      title: '邮箱',
-      key: 'email',
-      align: 'center',
-      render: createRenderFn('email', data)
-    },
-    {
-      title: '注册时间',
-      key: 'createTime',
-      align: 'center',
-      render: createRenderFn('createTime', data)
-    },
-    {
-      title: '角色',
-      key: 'role',
-      align: 'center',
-      render: (row: InternalRowData) => {
-        return (<NTag type={switchColor(row.role as string)}>{row.role}</NTag>)
-      }
-    },
-    {
-      title: '操作',
-      key: 'action',
-      align: 'center',
-      render: actionRender
-    }
-  ]);
-
+  const data = ref(createUsers())
+  const columns = useTable(data, columnSrc, 'username', {
+    handler: (row: InternalRowData) => row.role !== EnumUserRole.super,
+    rejectAction: () => window.$message?.error('超级管理员不能删除'),
+    returnImdiately: true,
+  })
   return { data, columns }
 }

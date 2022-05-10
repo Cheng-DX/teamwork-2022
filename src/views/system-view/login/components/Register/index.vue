@@ -1,8 +1,5 @@
 <template>
   <n-form ref="formRef" :model="model" :rules="rules" size="large" :show-label="false">
-    <n-form-item path="username">
-      <n-input v-model:value="model.username" placeholder="请输入用户名" />
-    </n-form-item>
     <n-form-item path="role">
       <n-radio-group v-model:value="model.role" placeholder="请选择角色" style="width: 100%">
         <n-space justify="center">
@@ -10,6 +7,9 @@
           <n-radio :value="EnumUserRole.dealer">经销商</n-radio>
         </n-space>
       </n-radio-group>
+    </n-form-item>
+    <n-form-item path="username">
+      <n-input v-model:value="model.username" placeholder="请输入用户名" />
     </n-form-item>
     <n-form-item path="phone">
       <n-input v-model:value="model.phone" placeholder="手机号码" />
@@ -32,7 +32,9 @@
     <n-space :vertical="true" :size="18">
       <login-agreement v-model:value="agreement" />
       <n-button type="primary" size="large" :block="true" :round="true" @click="handleSubmit">确定</n-button>
-      <n-button size="large" :block="true" :round="true" @click="toLoginModule('pwd-login')">返回</n-button>
+      <n-button v-if="!disableBack" size="large" :block="true" :round="true" @click="toLoginModule('pwd-login')"
+        >返回</n-button
+      >
     </n-space>
   </n-form>
 </template>
@@ -44,6 +46,10 @@ import { useRouterPush } from '@/composables';
 import { useSmsCode } from '@/hooks';
 import { formRules, getConfirmPwdRule } from '@/utils';
 import { EnumUserRole } from '@/enum/business';
+
+defineProps<{
+  disableBack?: Boolean;
+}>();
 
 const { toLoginModule } = useRouterPush();
 const { label, isCounting, loading: smsLoading, start } = useSmsCode();
@@ -81,7 +87,7 @@ function handleSubmit(e: MouseEvent) {
         window.$message?.error('请先阅读并同意《用户协议》《隐私权政策》');
         return;
       }
-      window.$message?.success('注册成功!');
+      window.$message?.success('Succeed!');
     } else {
       window.$message?.error('验证失败!');
     }
