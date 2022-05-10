@@ -1,9 +1,8 @@
-import './user.css'
 import { EnumUserRole } from '@/enum/business'
 import { ref } from 'vue';
 import { useTable } from '@/data/utils/useTable'
-import { InternalRowData } from 'naive-ui/lib/data-table/src/interface';
-import { ColumnSrcItem } from '@/data/utils/creator';
+import { type InternalRowData } from 'naive-ui/lib/data-table/src/interface';
+import { type ColumnSrcItem } from '@/data/utils/creator';
 import { NTag } from 'naive-ui';
 
 const columnSrc: ColumnSrcItem[] = [

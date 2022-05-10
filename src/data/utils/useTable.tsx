@@ -1,9 +1,9 @@
 import { NButton } from 'naive-ui'
 import { InternalRowData } from 'naive-ui/lib/data-table/src/interface'
-import { ref, Ref } from 'vue'
-import { ColumnSrcItem, createColumns } from './creator'
+import { ref, type Ref } from 'vue'
+import { type ColumnSrcItem, createColumns } from './creator'
 
-interface Filter {
+export interface Filter {
   handler: (row: InternalRowData) => boolean
   rejectAction?: Function
   acceptAction?: Function

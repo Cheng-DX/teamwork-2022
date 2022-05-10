@@ -1,6 +1,6 @@
-import { h, Ref } from 'vue';
+import { h, type Ref } from 'vue';
 import { type DataTableColumn } from 'naive-ui';
-import { InternalRowData } from 'naive-ui/lib/data-table/src/interface';
+import { type InternalRowData } from 'naive-ui/lib/data-table/src/interface';
 import ShowOrEdit from './ShowOrEdit';
 
 export interface ColumnSrcItem {
