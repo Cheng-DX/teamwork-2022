@@ -14,7 +14,7 @@ import { useThemeStore } from '@/store';
 
 const theme = useThemeStore();
 function handleClickLink() {
-  window.open('https://github.com/honghuangdc/soybean-admin', '_blank');
+  window.open('https://github.com/Cheng-DX/teamwork-2022', '_blank');
 }
 </script>
 <style scoped></style>

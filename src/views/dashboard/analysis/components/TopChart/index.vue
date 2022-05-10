@@ -68,6 +68,9 @@ const { domRef: lineRef } = useEcharts(
     ],
     yAxis: [
       {
+        splitLine: {
+          show: false
+        },
         type: 'value'
       }
     ],

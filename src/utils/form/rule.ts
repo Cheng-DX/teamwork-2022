@@ -4,6 +4,8 @@ import { REGEXP_PHONE, REGEXP_PWD, REGEXP_CODE_SIX, REGEXP_EMAIL } from '@/confi
 
 /** 表单规则 */
 interface CustomFormRules {
+  /** 用户名 */
+  username: FormItemRule[];
   /** 手机号码 */
   phone: FormItemRule[];
   /** 密码 */
@@ -16,6 +18,10 @@ interface CustomFormRules {
 
 /** 表单规则 */
 export const formRules: CustomFormRules = {
+  username: [
+    { required: true, message: '请输入用户名' },
+    { pattern: /^[a-zA-Z0-9_]{4,16}$/, message: '用户名只能包含数字、字母、下划线，长度为4-16位', trigger: 'input' }
+  ],
   phone: [
     { required: true, message: '请输入手机号码' },
     { pattern: REGEXP_PHONE, message: '手机号码格式错误', trigger: 'input' }
