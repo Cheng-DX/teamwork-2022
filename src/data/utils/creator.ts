@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { h, Ref } from 'vue';
+import { type DataTableColumn } from 'naive-ui';
 import { InternalRowData } from 'naive-ui/lib/data-table/src/interface';
 import ShowOrEdit from './ShowOrEdit';
 
@@ -26,5 +27,5 @@ export function createColumns(src: ColumnSrcItem[], data: Ref<any>) {
     key,
     align: 'center',
     render: renderer || createRenderFn(key, data)
-  })) as InternalRowData[];
+  })) as DataTableColumn[];
 }
