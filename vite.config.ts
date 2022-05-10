@@ -36,7 +36,7 @@ export default defineConfig(configEnv => {
       proxy: createViteProxy(isOpenProxy, envConfig)
     },
     build: {
-      outdir: './docs',
+      outDir: './docs',
       brotliSize: false
     }
   };
