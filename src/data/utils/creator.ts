@@ -26,5 +26,5 @@ export function createColumns(src: ColumnSrcItem[], data: Ref<any>) {
     key,
     align: 'center',
     render: renderer || createRenderFn(key, data)
-  }));
+  })) as InternalRowData[];
 }

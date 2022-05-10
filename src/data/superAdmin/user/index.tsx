@@ -27,12 +27,12 @@ const columnSrc: ColumnSrcItem[] = [
     title: '角色',
     key: 'role',
     renderer: (row: InternalRowData) => {
-      return (<NTag type={switchColor(row.role as string)}>{row.role}</NTag>)
+      return (<NTag type={_switchColor(row.role as string)}>{row.role}</NTag>)
     }
   },
 ]
 
-function switchColor(role: string) {
+function _switchColor(role: string) {
   switch (role) {
     case EnumUserRole.super:
       return 'success'
