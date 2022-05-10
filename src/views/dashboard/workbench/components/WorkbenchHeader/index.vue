@@ -9,7 +9,16 @@
         </div>
       </div>
       <n-space :size="24" :wrap="false">
-        <n-statistic v-for="item in statisticData" :key="item.id" class="whitespace-nowrap" v-bind="item"></n-statistic>
+        <n-statistic
+          v-for="item in statisticData"
+          :key="item.id"
+          :label="item.label"
+          tabular-nums
+          class="whitespace-nowrap"
+        >
+          <n-number-animation :from="0" :to="Number(item.value)" show-separator />
+          <template #suffix>{{ item.detail }}</template>
+        </n-statistic>
       </n-space>
     </div>
   </n-card>
@@ -22,6 +31,7 @@ interface StatisticData {
   id: number;
   label: string;
   value: string;
+  detail: string;
 }
 
 const auth = useAuthStore();
@@ -29,18 +39,21 @@ const auth = useAuthStore();
 const statisticData: StatisticData[] = [
   {
     id: 0,
-    label: '项目数',
-    value: '25'
+    label: '新增用户',
+    value: '15',
+    detail: '位'
   },
   {
     id: 1,
-    label: '待办',
-    value: '4/16'
+    label: '新增订单',
+    value: '5890',
+    detail: '单'
   },
   {
     id: 2,
-    label: '消息',
-    value: '12'
+    label: '总流水',
+    value: '8835048',
+    detail: '元'
   }
 ];
 </script>
