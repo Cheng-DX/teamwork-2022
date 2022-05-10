@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { h, Ref } from 'vue';
 import { type DataTableColumn } from 'naive-ui';
 import { InternalRowData } from 'naive-ui/lib/data-table/src/interface';
@@ -10,11 +9,12 @@ export interface ColumnSrcItem {
   renderer?: Function;
 }
 
-export function createRenderFn(columnLabel: string, data: Ref<any>, valueRenderer?: Function) {
+export function createRenderFn(columnLabel: string, data: Ref<any[]>, valueRenderer?: Function) {
   return function render(row: InternalRowData, index: number) {
     return h(ShowOrEdit, {
       value: valueRenderer || row[columnLabel],
       onUpdateValue(v: any) {
+        // eslint-disable-next-line no-param-reassign
         data.value[index][columnLabel] = v;
       }
     });

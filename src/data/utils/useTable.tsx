@@ -11,15 +11,18 @@ interface Filter {
 }
 
 export function useTable(data: Ref<any[]>, columnSrc: ColumnSrcItem[], deleteBy: string, filter?: Filter) {
-  columnSrc.push(
-    {
-      title: '删除',
-      key: 'delete',
-      renderer: (row: InternalRowData) => (<div class="flex justify-evenly" >
-        <NButton secondary strong onClick={() => deleteOne(row)} type="error">删除</NButton>
-      </div>)
-    }
-  )
+  if (!columnSrc.find(item => item.key === 'delete')) {
+    columnSrc.push(
+      {
+        title: '删除',
+        key: 'delete',
+        renderer: (row: InternalRowData) => (<div class="flex justify-evenly" >
+          <NButton secondary strong onClick={() => deleteOne(row)} type="error">删除</NButton>
+        </div>)
+      }
+    )
+  }
+
 
   function deleteOne(row: InternalRowData) {
     if (!filter?.handler(row)) {
