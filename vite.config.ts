@@ -37,7 +37,8 @@ export default defineConfig(configEnv => {
     },
     build: {
       outDir: './docs',
-      brotliSize: false
+      brotliSize: false,
+      chunkSizeWarningLimit: 2048
     }
   };
 });
