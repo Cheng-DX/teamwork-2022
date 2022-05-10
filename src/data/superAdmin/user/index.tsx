@@ -1,50 +1,11 @@
-import { DataTableColumn, NInput, NTag } from 'naive-ui/lib/components';
+import { DataTableColumn, NTag } from 'naive-ui/lib/components';
 import './user.css'
 
 import { EnumUserRole } from '@/enum/business'
 import { NButton } from 'naive-ui';
-import { defineComponent, h, nextTick, Ref, ref } from 'vue';
+import { h, Ref, ref } from 'vue';
 import { InternalRowData } from 'naive-ui/lib/data-table/src/interface';
-
-const ShowOrEdit = defineComponent({
-  props: {
-    value: [String, Number, Function],
-    onUpdateValue: Function
-  },
-  setup(props) {
-    const isEdit = ref(false)
-    const inputRef = ref<(HTMLInputElement | null)>(null)
-    const inputValue = ref(props.value)
-    function handleOnClick() {
-      isEdit.value = true
-      nextTick(() => {
-        inputRef.value?.focus()
-      })
-    }
-    function handleChange() {
-      props.onUpdateValue ? props.onUpdateValue(inputValue.value) : null
-      isEdit.value = false
-    }
-    return () =>
-      h(
-        'div',
-        {
-          onClick: handleOnClick
-        },
-        isEdit.value
-          ? h(NInput, {
-            ref: inputRef,
-            value: inputValue.value,
-            onUpdateValue: (v) => {
-              inputValue.value = v
-            },
-            onChange: handleChange,
-            onBlur: handleChange
-          })
-          : props.value
-      )
-  }
-})
+import ShowOrEdit from '@/data/utils/ShowOrEdit';
 
 function actionRender() {
   return (
