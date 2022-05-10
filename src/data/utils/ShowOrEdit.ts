@@ -1,4 +1,4 @@
-import { defineComponent, ref, nextTick, h } from 'vue';
+import { defineComponent, ref, nextTick, h, DefineComponent } from 'vue';
 import { NInput } from 'naive-ui';
 
 export default defineComponent({
@@ -41,4 +41,4 @@ export default defineComponent({
           : props.value
       );
   }
-});
+}) as DefineComponent;

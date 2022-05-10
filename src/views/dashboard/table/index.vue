@@ -1,15 +1,16 @@
 <template>
   <div>
-    <n-card :title="title" :class="`h-${height}px shadow-sm rounded-16px`">
+    <n-card :title="title" class="shadow-sm rounded-16px">
       <n-space :vertical="true">
-        <loading-empty-wrapper :class="`h-${height}px`" :loading="loading" :empty="empty">
+        <slot></slot>
+        <loading-empty-wrapper :loading="loading" :empty="empty">
           <n-data-table
             :columns="columns"
             :data="data"
             :flex-height="true"
             :pagination="{ pageSize }"
             striped
-            :class="`h-${height}px`"
+            :style="{ height: `${height}px` }"
           />
         </loading-empty-wrapper>
       </n-space>

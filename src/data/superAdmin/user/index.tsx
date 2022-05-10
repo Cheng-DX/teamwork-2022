@@ -39,7 +39,7 @@ function createUsers() {
   for (let i = 0; i < 10; i++) {
     const username = `user${i}`;
     const email = `${username}@cloudFac.com`;
-    const phone = `13${i}${i}${i}${i}${i}${i}${i}${i}${i}${i}${i}`;
+    const phone = `13${i.toString().repeat(9)}`;
     users.push({
       username,
       phone,
