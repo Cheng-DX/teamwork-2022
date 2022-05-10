@@ -2,8 +2,7 @@
 export enum EnumUserRole {
   super = '超级管理员',
   admin = '云工厂管理员',
-  user = '经销商'
-  // custom = '自定义角色'
+  dealer = '经销商'
 }
 
 /** 登录模块 */
