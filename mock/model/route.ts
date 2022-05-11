@@ -18,7 +18,7 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
       ],
       meta: {
         title: '数据总览',
-        icon: 'carbon:dashboard',
+        icon: 'carbon:analytics',
         order: 1
       }
     },
@@ -30,7 +30,7 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
         title: '用户管理',
         requiresAuth: true,
         singleLayout: 'basic',
-        icon: 'carbon:dashboard',
+        icon: 'carbon:user-profile',
         order: 1
       }
     },
@@ -46,7 +46,7 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
           meta: {
             title: '产品',
             requiresAuth: true,
-            icon: 'icon-park-outline:analysis'
+            icon: 'carbon:result'
           }
         },
         {
@@ -56,13 +56,13 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
           meta: {
             title: '产品类别',
             requiresAuth: true,
-            icon: 'icon-park-outline:analysis'
+            icon: 'carbon:carbon-for-ibm-product'
           }
         }
       ],
       meta: {
         title: '产品管理',
-        icon: 'carbon:dashboard',
+        icon: 'carbon:product',
         order: 1
       }
     },
@@ -78,7 +78,7 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
           meta: {
             title: '设备',
             requiresAuth: true,
-            icon: 'icon-park-outline:analysis'
+            icon: 'carbon:machine-learning-model'
           }
         },
         {
@@ -88,68 +88,14 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
           meta: {
             title: '设备类别',
             requiresAuth: true,
-            icon: 'icon-park-outline:analysis'
+            icon: 'carbon:operations-field'
           }
         }
       ],
       meta: {
         title: '设备管理',
-        icon: 'carbon:dashboard',
+        icon: 'carbon:machine-learning',
         order: 1
-      }
-    },
-    {
-      name: 'multi-menu',
-      path: '/multi-menu',
-      component: 'basic',
-      children: [
-        {
-          name: 'multi-menu_first',
-          path: '/multi-menu/first',
-          component: 'multi',
-          children: [
-            {
-              name: 'multi-menu_first_second',
-              path: '/multi-menu/first/second',
-              component: 'self',
-              meta: {
-                title: '二级菜单',
-                requiresAuth: true,
-                icon: 'ic:outline-menu'
-              }
-            },
-            {
-              name: 'multi-menu_first_second-new',
-              path: '/multi-menu/first/second-new',
-              component: 'multi',
-              children: [
-                {
-                  name: 'multi-menu_first_second-new_third',
-                  path: '/multi-menu/first/second-new/third',
-                  component: 'self',
-                  meta: {
-                    title: '三级菜单',
-                    requiresAuth: true,
-                    icon: 'ic:outline-menu'
-                  }
-                }
-              ],
-              meta: {
-                title: '二级菜单(有子菜单)',
-                icon: 'ic:outline-menu'
-              }
-            }
-          ],
-          meta: {
-            title: '一级菜单',
-            icon: 'ic:outline-menu'
-          }
-        }
-      ],
-      meta: {
-        title: '多级菜单',
-        icon: 'carbon:menu',
-        order: 7
       }
     }
   ],

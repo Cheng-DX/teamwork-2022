@@ -160,9 +160,8 @@ const { domRef: pieRef } = useEcharts(
         data: [
           { value: 3, name: '新增' },
           { value: 28, name: '闲置中' },
-          { value: 53, name: '生产中' },
-          { value: 11, name: '已关机' },
-          { value: 5, name: '已报废' }
+          { value: 58, name: '生产中' },
+          { value: 11, name: '已关机' }
         ]
       }
     ]
