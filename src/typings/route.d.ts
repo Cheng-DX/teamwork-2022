@@ -22,6 +22,16 @@ declare namespace AuthRoute {
     | 'document_vite'
     | 'document_naive'
     | 'document_project'
+    // 用户管理
+    | 'user-management'
+    // 产品管理
+    | 'product-management'
+    | 'product-management_product'
+    | 'product-management_product-type'
+    // 设备
+    | 'equipment-management'
+    | 'equipment-management_equipment'
+    | 'equipment-management_equipment-type'
     | 'component'
     | 'component_button'
     | 'component_card'
