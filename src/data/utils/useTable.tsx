@@ -17,14 +17,14 @@ export function useTable(data: Ref<any[]>, columnSrc: ColumnSrcItem[], deleteBy:
         title: '删除',
         key: 'delete',
         renderer: (row: InternalRowData) => (<div class="flex justify-evenly" >
-          <NButton secondary strong onClick={() => deleteOne(row)} type="error">删除</NButton>
+          <NButton secondary strong onClick={() => deleteOne(row, data)} type="error">删除</NButton>
         </div>)
       }
     )
   }
 
 
-  function deleteOne(row: InternalRowData) {
+  function deleteOne(row: InternalRowData, data: Ref<any[]>) {
     if (!filter?.handler(row)) {
       if (filter?.rejectAction) {
         filter.rejectAction()

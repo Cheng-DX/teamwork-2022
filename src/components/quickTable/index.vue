@@ -1,7 +1,7 @@
 <template>
   <div>
     <n-card :title="title" class="shadow-sm rounded-16px">
-      <n-space :vertical="true">
+      <n-space vertical>
         <slot></slot>
         <loading-empty-wrapper :loading="loading" :empty="empty">
           <n-data-table
@@ -13,6 +13,7 @@
             :style="{ height: `${height}px` }"
           />
         </loading-empty-wrapper>
+        <slot name="footer"></slot>
       </n-space>
     </n-card>
   </div>
