@@ -34,7 +34,7 @@ const cardData: CardData[] = [
   {
     id: 'visit',
     title: '访问量',
-    value: 1000000,
+    value: 2395,
     unit: '',
     colors: ['#ec4786', '#b955a4'],
     icon: 'ant-design:bar-chart-outlined'
@@ -42,8 +42,8 @@ const cardData: CardData[] = [
   {
     id: 'amount',
     title: '成交额',
-    value: 234567.89,
-    unit: '$',
+    value: 8835048,
+    unit: '￥',
     colors: ['#865ec0', '#5144b4'],
     icon: 'ant-design:money-collect-outlined'
   },

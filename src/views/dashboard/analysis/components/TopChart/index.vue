@@ -4,16 +4,16 @@
       <n-card :bordered="false" class="rounded-16px shadow-sm">
         <div class="flex w-full h-360px">
           <div class="w-200px h-full py-12px">
-            <h3 class="text-16px font-bold">Dashboard</h3>
-            <p class="text-[#aaa]">Overview Of Lasted Month</p>
+            <h3 class="text-16px font-bold">数据简报</h3>
+            <p class="text-[#aaa]">在过去的10天内</p>
             <h3 class="pt-36px text-24px font-bold">
-              <count-to prefix="$" :start-value="0" :end-value="7754" />
+              <count-to prefix="￥" :start-value="0" :end-value="74895137" />
             </h3>
-            <p class="text-[#aaa]">Current Month Earnings</p>
+            <p class="text-[#aaa]">订单总金额</p>
             <h3 class="pt-36px text-24px font-bold">
-              <count-to :start-value="0" :end-value="1234" />
+              <count-to prefix="￥" :start-value="0" :end-value="87492" />
             </h3>
-            <p class="text-[#aaa]">Current Month Sales</p>
+            <p class="text-[#aaa]">平均成交金额</p>
             <n-button class="mt-24px" type="primary">Last Month Summary</n-button>
           </div>
           <div class="flex-1-hidden h-full">
@@ -39,6 +39,14 @@ const theme = useThemeStore();
 
 const darkMode = computed(() => theme.darkMode);
 
+function createXData() {
+  const xData = [];
+  for (let i = 10; i <= 19; i++) {
+    xData.push(`5-${i}`);
+  }
+  return xData;
+}
+
 const { domRef: lineRef } = useEcharts(
   ref<ECOption>({
     tooltip: {
@@ -51,7 +59,7 @@ const { domRef: lineRef } = useEcharts(
       }
     },
     legend: {
-      data: ['下载量', '注册数']
+      data: ['订单数量']
     },
     grid: {
       left: '3%',
@@ -63,7 +71,7 @@ const { domRef: lineRef } = useEcharts(
       {
         type: 'category',
         boundaryGap: false,
-        data: ['06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00', '24:00']
+        data: createXData()
       }
     ],
     yAxis: [
@@ -77,7 +85,7 @@ const { domRef: lineRef } = useEcharts(
     series: [
       {
         color: '#8e9dff',
-        name: '下载量',
+        name: '订单数量',
         type: 'line',
         smooth: true,
         stack: 'Total',
@@ -103,37 +111,7 @@ const { domRef: lineRef } = useEcharts(
         emphasis: {
           focus: 'series'
         },
-        data: [4623, 6145, 6268, 6411, 1890, 4251, 2978, 3880, 3606, 4311]
-      },
-      {
-        color: '#26deca',
-        name: '注册数',
-        type: 'line',
-        smooth: true,
-        stack: 'Total',
-        areaStyle: {
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              {
-                offset: 0.25,
-                color: '#26deca'
-              },
-              {
-                offset: 1,
-                color: '#fff'
-              }
-            ]
-          }
-        },
-        emphasis: {
-          focus: 'series'
-        },
-        data: [2208, 2016, 2916, 4512, 8281, 2008, 1963, 2367, 2956, 678]
+        data: [4623, 6145, 6268, 6411, 1890, 4251, 2978, 3880, 3606, 5890]
       }
     ]
   }),
@@ -142,8 +120,8 @@ const { domRef: lineRef } = useEcharts(
 
 const { domRef: pieRef } = useEcharts(
   ref<ECOption>({
-    tooltip: {
-      trigger: 'item'
+    title: {
+      text: '设备情况简报'
     },
     legend: {
       bottom: '1%',
@@ -154,8 +132,8 @@ const { domRef: pieRef } = useEcharts(
     },
     series: [
       {
-        color: ['#5da8ff', '#8e9dff', '#fedc69', '#26deca'],
-        name: '时间安排',
+        color: ['#5da8ff', '#8e9dff', '#fedc69', '#26deca', '#ff5c5c'],
+        name: '设备',
         type: 'pie',
         radius: ['45%', '75%'],
         avoidLabelOverlap: false,
@@ -171,17 +149,20 @@ const { domRef: pieRef } = useEcharts(
         emphasis: {
           label: {
             show: true,
-            fontSize: '12'
+            fontSize: '25',
+            fontWeight: 'bold',
+            formatter: '{b} {d}%'
           }
         },
         labelLine: {
           show: false
         },
         data: [
-          { value: 20, name: '学习' },
-          { value: 10, name: '娱乐' },
-          { value: 30, name: '工作' },
-          { value: 40, name: '休息' }
+          { value: 3, name: '新增' },
+          { value: 28, name: '闲置中' },
+          { value: 53, name: '生产中' },
+          { value: 11, name: '已关机' },
+          { value: 5, name: '已报废' }
         ]
       }
     ]
