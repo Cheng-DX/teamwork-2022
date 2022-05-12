@@ -17,6 +17,7 @@ export interface ColumnSrcItem {
     disabled?: boolean;
     creator?: () => string | number;
     break?: boolean;
+    renderer?: (value: string | number) => any;
   };
 }
 
