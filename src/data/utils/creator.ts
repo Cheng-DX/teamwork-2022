@@ -21,24 +21,26 @@ export interface ColumnSrcItem {
   };
 }
 
-export function createRenderFn(columnLabel: string, data: Ref<any[]>, valueRenderer?: Function) {
+export function createRenderFn(columnLabel: string, data: Ref<any[]>, editable?: boolean) {
   return function render(row: InternalRowData, index: number) {
-    return h(ShowOrEdit, {
-      value: valueRenderer || row[columnLabel],
-      onUpdateValue(v: any) {
-        // eslint-disable-next-line no-param-reassign
-        data.value[index][columnLabel] = v;
-      }
-    });
+    return editable
+      ? h(ShowOrEdit, {
+          value: row[columnLabel],
+          onUpdateValue(v: any) {
+            // eslint-disable-next-line no-param-reassign
+            data.value[index][columnLabel] = v;
+          }
+        })
+      : h('span', row[columnLabel]);
   };
 }
 
-export function createColumns(src: ColumnSrcItem[], data: Ref<any>) {
+export function createColumns(src: ColumnSrcItem[], data: Ref<any>, editable?: boolean) {
   return src.map(({ key, title, renderer, width, align }) => ({
     title,
     key,
     align: align || 'center',
-    render: renderer || createRenderFn(key, data),
+    render: renderer || createRenderFn(key, data, editable),
     sorter: 'default',
     width
   })) as DataTableColumn[];

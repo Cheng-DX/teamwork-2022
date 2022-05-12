@@ -27,7 +27,7 @@ import { useDialog } from 'naive-ui';
 import { FlashOutline } from '@vicons/ionicons5';
 import { InternalRowData } from 'naive-ui/lib/data-table/src/interface';
 import { useFullscreen } from '@vueuse/core';
-import { useOrders } from '@/data/superAdmin/order';
+import { useOrders } from '@/data/dealer/order';
 import QuickTable from '@/components/quickTable/index.vue';
 import { useDelete } from '@/data/utils/useOption';
 import AddForm from '@/data/utils/AddForm';

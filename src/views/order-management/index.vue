@@ -23,30 +23,19 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import { FlashOutline } from '@vicons/ionicons5';
-import { InternalRowData } from 'naive-ui/lib/data-table/src/interface';
 import { useFullscreen } from '@vueuse/core';
 import { useOrders } from '@/data/superAdmin/order';
 import QuickTable from '@/components/quickTable/index.vue';
-import { useDelete } from '@/data/utils/useOption';
 
 const { isFullscreen } = useFullscreen();
-const { data, columns } = useOrders();
+const { data, columns } = useOrders(false);
 
 const search = ref('');
 const dispaly = computed(() => {
   if (search.value) {
-    return data.value.filter(item => item.id.includes(search.value) || item.name.includes(search.value));
+    return data.value.filter(item => item.name.includes(search.value));
   }
   return data.value;
 });
-
-columns.value.push(useDelete(deleteOne));
-
-function deleteOne(row: InternalRowData) {
-  data.value.splice(
-    data.value.findIndex(item => item.id === row.id),
-    1
-  );
-}
 </script>
 <style scoped></style>

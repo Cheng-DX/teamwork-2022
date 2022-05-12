@@ -78,7 +78,7 @@ export default defineComponent({
     }
 
     function switchFormItem(colmunSrc: ColumnSrcItem, model: any) {
-      const placeholder = colmunSrc?.form?.placeholder || `请输入${colmunSrc.title}`;
+      const placeholder = colmunSrc?.form?.placeholder || `请${colmunSrc?.form?.type === 'select' ? '选择' : '输入'}${colmunSrc.title}`;
       const disabled = colmunSrc?.form?.disabled || false;
       if (colmunSrc.form?.renderer) {
         return colmunSrc.form.renderer(model[colmunSrc.key]);

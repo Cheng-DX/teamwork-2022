@@ -4,7 +4,11 @@ import { NInput } from 'naive-ui';
 export default defineComponent({
   props: {
     value: [String, Number, Function],
-    onUpdateValue: Function
+    onUpdateValue: Function,
+    editable: {
+      type: Boolean,
+      default: true
+    }
   },
   setup(props) {
     const isEdit = ref(false);
@@ -36,7 +40,8 @@ export default defineComponent({
                 inputValue.value = v;
               },
               onChange: handleChange,
-              onBlur: handleChange
+              onBlur: handleChange,
+              disabled: !props.editable
             })
           : props.value
       );

@@ -1,10 +1,10 @@
 import { ColumnSrcItem } from "@/data/utils/creator"
 import { NInputNumber, NDatePicker, NInput, NTag, NSpace, NButton } from "naive-ui"
 import { InternalRowData } from "naive-ui/lib/data-table/src/interface"
-import { orderStatus } from "./data"
-import { switchType } from "./functions"
+import { orderStatus, switchType } from "@/data/superAdmin/order/core"
+import { useProducts } from "@/data/superAdmin/product"
 
-export const columnSrcs: ColumnSrcItem[] = [
+export const columnSrc: ColumnSrcItem[] = [
   {
     title: '序号',
     key: 'index',
@@ -26,12 +26,19 @@ export const columnSrcs: ColumnSrcItem[] = [
   {
     title: '产品名称',
     key: 'name',
+    form: {
+      type: 'select',
+      options: useProducts().data.value.map(item => ({
+        label: item.name,
+        value: item.name
+      }))
+    }
   },
   {
     title: '订购数量',
     key: 'number',
     renderer: (row: InternalRowData) => {
-      return <NInputNumber disabled v-model:value={row.number} validator={(v) => v > 0} />
+      return <NInputNumber v-model:value={row.number} validator={(v) => v > 0} />
     },
     width: '130px',
     form: {
@@ -41,7 +48,7 @@ export const columnSrcs: ColumnSrcItem[] = [
     title: '投标截止日期',
     key: 'bidDeadline',
     renderer: (row: InternalRowData) => {
-      return <NDatePicker disabled v-model:value={row.bidDeadline} ></NDatePicker>
+      return <NDatePicker v-model:value={row.bidDeadline} ></NDatePicker>
     },
     width: '150px',
     form: {
@@ -52,7 +59,7 @@ export const columnSrcs: ColumnSrcItem[] = [
     title: '交付日期',
     key: 'deliveryDate',
     renderer: (row: InternalRowData) => {
-      return <NDatePicker disabled v-model:value={row.deliveryDate} ></NDatePicker>
+      return <NDatePicker v-model:value={row.deliveryDate} ></NDatePicker>
     },
     width: '150px',
     form: {
@@ -72,7 +79,7 @@ export const columnSrcs: ColumnSrcItem[] = [
     title: '收货地址',
     key: 'address',
     renderer: (row: InternalRowData) => {
-      return <NInput disabled v-model:value={row.address} type="textarea" />
+      return <NInput v-model:value={row.address} type="textarea" />
     },
     width: '200px',
     align: 'left',
@@ -85,7 +92,7 @@ export const columnSrcs: ColumnSrcItem[] = [
     key: 'status',
     renderer: (row: InternalRowData) => {
       return (<NTag type={switchType(row.status as string)}>{
-        orderStatus.find(item => item.value === row.status)?.label
+        orderStatus.find((item: { value: unknown }) => item.value === row.status)?.label
       }
       </NTag>)
     },
@@ -98,7 +105,7 @@ export const columnSrcs: ColumnSrcItem[] = [
           <div class="w-full">
             <NSpace vertical={true} size={18} >
               <NButton secondary strong type={switchType(value as string)} round size="large" block={true}>{
-                orderStatus.find(item => item.value === value)?.label
+                orderStatus.find((item: { value: string | number }) => item.value === value)?.label
               }</NButton>
             </NSpace>
           </div>

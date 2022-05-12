@@ -1,8 +1,7 @@
 import { ref } from 'vue';
-import { useTable } from '@/data/utils/useTable'
-import { createDate } from './core/functions';
-import { names, orderStatus } from './core/data';
-import { columnSrcs } from './core/columns';
+import { useTable } from '@/data/utils/useTable';
+import { names, orderStatus, createDate } from '@/data/superAdmin/order/core';
+import { columnSrc } from './core/columns';
 
 function createOrders() {
   const data = [];
@@ -26,6 +25,6 @@ function createOrders() {
 
 export function useOrders(editable?: boolean) {
   const data = ref(createOrders())
-  const columns = useTable(data, columnSrcs, editable)
-  return { data, columns, columnSrc: columnSrcs }
+  const columns = useTable(data, columnSrc, editable)
+  return { data, columns, columnSrc }
 }

@@ -14,6 +14,14 @@
     <n-form-item path="phone">
       <n-input v-model:value="model.phone" placeholder="手机号码" />
     </n-form-item>
+    <template v-if="model.role === EnumUserRole.admin">
+      <n-form-item path="factoryName">
+        <n-input v-model:value="model.factoryName" placeholder="请输入工厂名" />
+      </n-form-item>
+      <n-form-item path="factoryDescription">
+        <n-input v-model:value="model.factoryDescription" type="textarea" placeholder="请输入工厂简介" />
+      </n-form-item>
+    </template>
     <n-form-item path="code">
       <div class="flex-y-center w-full">
         <n-input v-model:value="model.code" placeholder="验证码" />
@@ -40,7 +48,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, toRefs } from 'vue';
+import { reactive, ref, toRefs, watch } from 'vue';
 import type { FormInst, FormRules } from 'naive-ui';
 import { useRouterPush } from '@/composables';
 import { useSmsCode } from '@/hooks';
@@ -58,6 +66,8 @@ const formRef = ref<(HTMLElement & FormInst) | null>(null);
 const model = reactive({
   username: '',
   phone: '',
+  factoryName: '',
+  factoryDescription: '',
   role: EnumUserRole.admin,
   code: '',
   pwd: '',
@@ -65,6 +75,8 @@ const model = reactive({
 });
 const rules: FormRules = {
   username: formRules.username,
+  factoryName: formRules.notBlank,
+  factoryDescription: formRules.notBlank,
   phone: formRules.phone,
   code: formRules.code,
   pwd: formRules.pwd,
@@ -77,10 +89,20 @@ function handleSmsCode() {
   start();
 }
 
+watch(model, () => {
+  if (model.role === EnumUserRole.admin) {
+    model.factoryDescription = '';
+    model.factoryName = '';
+  }
+});
+
 function handleSubmit(e: MouseEvent) {
   if (!formRef.value) return;
   e.preventDefault();
-
+  if (model.role !== EnumUserRole.admin) {
+    model.factoryName = '投机取巧的经销商';
+    model.factoryDescription = '投机取巧的经销商';
+  }
   formRef.value.validate(errors => {
     if (!errors) {
       if (!agreement.value) {
