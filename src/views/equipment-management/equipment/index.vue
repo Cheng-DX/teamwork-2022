@@ -19,9 +19,11 @@
 import { computed, DefineComponent, h, ref } from 'vue';
 import { useDialog } from 'naive-ui';
 import { FlashOutline } from '@vicons/ionicons5';
+import { InternalRowData } from 'naive-ui/lib/data-table/src/interface';
 import { Register } from '@/views/system-view/login/components';
 import QuickTable from '@/components/quickTable/index.vue';
 import { useEquipments } from '@/data/superAdmin/equipment/index';
+import { useDelete } from '@/data/utils/useOption';
 
 const { data, columns } = useEquipments();
 const dialog = useDialog();
@@ -33,6 +35,15 @@ const dispaly = computed(() => {
   }
   return data.value;
 });
+
+columns.value.push(useDelete(deleteOne));
+
+function deleteOne(row: InternalRowData) {
+  data.value.splice(
+    data.value.findIndex(item => item.id === row.id),
+    1
+  );
+}
 
 function handleAdd() {
   dialog.info({

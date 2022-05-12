@@ -17,14 +17,18 @@
 
 <script lang="ts" setup>
 import { computed, DefineComponent, h, ref } from 'vue';
-import { useDialog } from 'naive-ui';
+import { useDialog, useMessage } from 'naive-ui';
 import { FlashOutline } from '@vicons/ionicons5';
+import { InternalRowData } from 'naive-ui/lib/data-table/src/interface';
+import { EnumUserRole } from '@/enum';
 import { useUsers } from '@/data/superAdmin/user';
 import { Register } from '@/views/system-view/login/components';
 import QuickTable from '@/components/quickTable/index.vue';
+import { Filter, useDelete } from '@/data/utils/useOption';
 
 const { data, columns } = useUsers();
 const dialog = useDialog();
+const message = useMessage();
 
 const search = ref('');
 const dispaly = computed(() => {
@@ -33,6 +37,23 @@ const dispaly = computed(() => {
   }
   return data.value;
 });
+
+const filter: Filter = {
+  handler: row => row.role !== EnumUserRole.super,
+  rejectAction: () => {
+    message.error('不能删除超级管理员');
+  },
+  returnImdiately: true
+};
+columns.value.push(useDelete(deleteOne, filter));
+
+function deleteOne(row: InternalRowData) {
+  const { username } = row;
+  data.value.splice(
+    data.value.findIndex(item => item.username === username),
+    1
+  );
+}
 
 function handleAdd() {
   dialog.info({

@@ -69,10 +69,6 @@ function createUsers() {
 
 export function useUsers() {
   const data = ref(createUsers())
-  const columns = useTable(data, columnSrc, 'username', {
-    handler: (row: InternalRowData) => row.role !== EnumUserRole.super,
-    rejectAction: () => window.$message?.error('超级管理员不能删除'),
-    returnImdiately: true,
-  })
+  const columns = useTable(data, columnSrc)
   return { data, columns }
 }

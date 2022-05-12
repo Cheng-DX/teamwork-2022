@@ -10,7 +10,7 @@
             :flex-height="true"
             :pagination="{ pageSize }"
             striped
-            :style="{ height: `${height}px` }"
+            :style="{ height: `${height ? height : 480}px` }"
           />
         </loading-empty-wrapper>
         <slot name="footer"></slot>
@@ -29,7 +29,7 @@ defineProps<{
   columns: DataTableColumn[];
   data: any[];
   pageSize: number;
-  height: number;
+  height?: number;
 }>();
 
 const { loading, startLoading, endLoading, empty } = useLoadingEmpty();
@@ -38,7 +38,7 @@ onMounted(() => {
   startLoading();
   setTimeout(() => {
     endLoading();
-  }, 500);
+  }, 300);
 });
 </script>
 <style scoped></style>
