@@ -2,7 +2,7 @@ import { ref } from 'vue';
 import { useTable } from '@/data/utils/useTable'
 import { type InternalRowData } from 'naive-ui/lib/data-table/src/interface';
 import { type ColumnSrcItem } from '@/data/utils/creator';
-import { NDatePicker, NInput, NInputNumber, NTag } from 'naive-ui';
+import { NButton, NDatePicker, NInput, NInputNumber, NSpace, NTag } from 'naive-ui';
 
 export const orderStatus = [
   {
@@ -21,16 +21,34 @@ export const orderStatus = [
     label: '生产中',
     value: 'producing',
   },
+  {
+    label: '未发布',
+    value: 'unpublished',
+  },
+  {
+    label: '已发布',
+    value: 'published',
+  }
 ]
 
 const columnSrc: ColumnSrcItem[] = [
   {
     title: '序号',
     key: 'index',
+    form: {
+      type: 'input',
+      break: true,
+      disabled: true
+    }
   },
   {
     title: '订单编号',
     key: 'id',
+    form: {
+      type: 'input',
+      disabled: true,
+      creator: () => `ONO${new Date().getTime() + Math.round(Math.random() * 10 + 200) * 2433494}`
+    }
   },
   {
     title: '产品名称',
@@ -42,14 +60,20 @@ const columnSrc: ColumnSrcItem[] = [
     renderer: (row: InternalRowData) => {
       return <NInputNumber v-model:value={row.number} validator={(v) => v > 0} />
     },
-    width: '130px'
+    width: '130px',
+    form: {
+      type: 'number',
+    }
   }, {
     title: '投标截止日期',
     key: 'bidDeadline',
     renderer: (row: InternalRowData) => {
       return <NDatePicker v-model:value={row.bidDeadline} ></NDatePicker>
     },
-    width: '150px'
+    width: '150px',
+    form: {
+      type: 'date',
+    }
   },
   {
     title: '交付日期',
@@ -57,7 +81,10 @@ const columnSrc: ColumnSrcItem[] = [
     renderer: (row: InternalRowData) => {
       return <NDatePicker v-model:value={row.deliveryDate} ></NDatePicker>
     },
-    width: '150px'
+    width: '150px',
+    form: {
+      type: 'date',
+    }
   },
   {
     title: '收货人',
@@ -66,7 +93,7 @@ const columnSrc: ColumnSrcItem[] = [
   {
     title: '收货人联系方式',
     key: 'receiverPhone',
-    width: '120px'
+    width: '120px',
   },
   {
     title: '收货地址',
@@ -75,16 +102,37 @@ const columnSrc: ColumnSrcItem[] = [
       return <NInput v-model:value={row.address} type="textarea" />
     },
     width: '200px',
-    align: 'left'
+    align: 'left',
+    form: {
+      type: 'textarea',
+    }
   },
   {
     title: '订单状态',
     key: 'status',
+    defaultValue: 'unpublished',
     renderer: (row: InternalRowData) => {
       return (<NTag type={switchType(row.status as string)}>{
         orderStatus.find(item => item.value === row.status)?.label
       }
       </NTag>)
+    },
+    form: {
+      type: 'select',
+      options: orderStatus,
+      renderer: value => {
+        return (
+          <div class="w-full">
+            <NSpace vertical={true} size={18} >
+              <NButton disabled strong type={switchType(value as string)} round size="large" block={true}>{
+                orderStatus.find(item => item.value === value)?.label
+              }</NButton>
+            </NSpace>
+
+          </div>
+        )
+
+      }
     }
   }
 ]
