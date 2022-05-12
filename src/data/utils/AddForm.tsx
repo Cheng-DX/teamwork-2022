@@ -7,6 +7,15 @@ export interface AddFormProps {
   columnSrcs: ColumnSrcItem[]
 }
 
+export function createIdTag(content: string) {
+  return (
+    <>
+      <NButton type="primary" round secondary size="medium">{content}</NButton>
+      <div class="w-18px"></div>
+    </>
+  )
+}
+
 export default defineComponent({
   props: {
     columnSrcs: {
@@ -34,7 +43,7 @@ export default defineComponent({
     }
 
     for (const columnSrc of props.columnSrcs) {
-      rules[columnSrc.key] = formRules.notBlank;
+      rules[columnSrc.key] = columnSrc?.form?.type === 'number' ? formRules.biggerThenZeroInt : formRules.notBlank;
       if (columnSrc.defaultValue === undefined || columnSrc.defaultValue === null) {
         if (columnSrc?.form?.creator) {
           model[columnSrc.key] = columnSrc.form.creator();
@@ -59,6 +68,7 @@ export default defineComponent({
             break;
           case 'select':
             model[columnSrc.key] = columnSrc.defaultValue;
+            break;
           default:
             model[columnSrc.key] = ''
             break;
@@ -67,42 +77,59 @@ export default defineComponent({
     }
 
     function switchFormItem(colmunSrc: ColumnSrcItem, model: any) {
-      if (colmunSrc?.form?.type) {
-        switch (colmunSrc.form.type) {
-          case 'input':
-            return (<NInput value={model[colmunSrc.key]} placeholder={colmunSrc.form?.placeholder} />)
-          case 'select':
-            return (<NSelect value={model[colmunSrc.key]} options={colmunSrc.form?.options} placeholder={colmunSrc.form?.placeholder} />)
-          case 'date':
-            return (<NDatePicker value={model[colmunSrc.key]} placeholder={colmunSrc.form?.placeholder} />)
-          case 'number':
-            return (<NInputNumber value={model[colmunSrc.key]} placeholder={colmunSrc.form?.placeholder} validator={(v: number) => v > 0} />)
-          case 'textarea':
-            return (<NInput type="textarea" value={model[colmunSrc.key]} placeholder={colmunSrc.form?.placeholder} />)
-          default:
-            return (<NInput value={model[colmunSrc.key]} placeholder={colmunSrc.form?.placeholder} />)
-        }
+      const placeholder = colmunSrc?.form?.placeholder || `请输入${colmunSrc.title}`;
+      const disabled = colmunSrc?.form?.disabled || false;
+      if (colmunSrc.form?.renderer) {
+        return colmunSrc.form.renderer(model[colmunSrc.key]);
       } else {
-        return (<NInput value={model[colmunSrc.key]} placeholder={colmunSrc.form?.placeholder} />)
+        if (colmunSrc?.form?.type) {
+          switch (colmunSrc.form.type) {
+            case 'input': {
+              if (colmunSrc.key === 'id') {
+                return (
+                  <div class="flex-y-center w-full">
+                    {createIdTag(colmunSrc.title)}
+                    <NInput v-model:value={model[colmunSrc.key]} placeholder={placeholder} disabled={disabled} class='w-full' />
+                  </div>
+                )
+              } else {
+                return <NInput v-model:value={model[colmunSrc.key]} placeholder={placeholder} disabled={disabled} class='w-full' />
+              }
+            }
+            case 'select':
+              return (<NSelect v-model:value={model[colmunSrc.key]} options={colmunSrc.form?.options} placeholder={placeholder} disabled={disabled} class='w-full' />)
+            case 'date':
+              return (<NDatePicker v-model:value={model[colmunSrc.key]} placeholder={placeholder} disabled={disabled} class='w-full' />)
+            case 'number':
+              return (<NInputNumber v-model:value={model[colmunSrc.key]} placeholder={placeholder} validator={(v: number) => v > 0} disabled={disabled} class='w-full' />)
+            case 'textarea':
+              return (<NInput type="textarea" v-model:value={model[colmunSrc.key]} placeholder={placeholder} disabled={disabled} class='w-full' />)
+            default:
+              return (<NInput v-model:value={model[colmunSrc.key]} placeholder={placeholder} disabled={disabled} class='w-full' />)
+          }
+        } else {
+          return (<NInput v-model:value={model[colmunSrc.key]} placeholder={placeholder} disabled={disabled} class='w-full' />)
+        }
       }
     }
 
     return () => {
       return (
-        <NForm ref="formRef" model={model} rules={rules} size="large" showLabel={false} >
+        <NForm ref={formRef} model={model} rules={rules} size="large" showLabel={false} >
           {
             props.columnSrcs.map(columnSrc => {
               return (
-                <NFormItem path={columnSrc.key} >
-                  {
-                    columnSrc?.form?.break ? null : switchFormItem(columnSrc, model)
-                  }
-                </NFormItem>
+                columnSrc?.form?.break ? null : (
+                  <NFormItem path={columnSrc.key} class="w-full" >
+                    {
+                      switchFormItem(columnSrc, model)
+                    }
+                  </NFormItem>)
               )
             })
           }
           <NSpace vertical={true} size={18} >
-            <NButton type="primary" size="large" block={true} onClick={handleSubmit}>确定</NButton>
+            <NButton type="primary" round size="large" block={true} onClick={handleSubmit}>确定</NButton>
           </NSpace>
         </NForm >
       )
