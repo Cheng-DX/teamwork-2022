@@ -14,7 +14,10 @@ interface CustomFormRules {
   code: FormItemRule[];
   /** 邮箱 */
   email: FormItemRule[];
+  /** 非空 */
   notBlank: FormItemRule[];
+  /** 大于0的整数 */
+  biggerThenZeroInt: FormItemRule[];
 }
 
 /** 表单规则 */
@@ -36,7 +39,32 @@ export const formRules: CustomFormRules = {
     { pattern: REGEXP_CODE_SIX, message: '验证码格式错误', trigger: 'input' }
   ],
   email: [{ pattern: REGEXP_EMAIL, message: '邮箱格式错误', trigger: 'blur' }],
-  notBlank: [{ required: true, message: '请输入内容', trigger: 'change' }]
+  notBlank: [
+    {
+      required: true,
+      message: '请输入内容',
+      trigger: 'blur',
+      validator: (_, value) => {
+        return value !== null && value !== undefined && !isBlankString(String(value));
+      }
+    }
+  ],
+  biggerThenZeroInt: [
+    {
+      required: true,
+      message: '只能输入大于0的整数',
+      trigger: 'blur',
+      validator: (_, value) => {
+        return (
+          value !== null &&
+          value !== undefined &&
+          !isBlankString(String(value)) &&
+          Number(value) > 0 &&
+          Number.isInteger(Number(value))
+        );
+      }
+    }
+  ]
 };
 
 /** 获取确认密码的表单规则 */
