@@ -1,7 +1,13 @@
 <template>
   <n-space :vertical="true" :size="16">
     <n-space vertical>
-      <quick-table title="订单管理" :columns="columns" :data="dispaly" :page-size="15" :height="580">
+      <quick-table
+        title="订单管理"
+        :columns="columns"
+        :data="dispaly"
+        :page-size="15"
+        :height="isFullscreen ? 580 : 480"
+      >
         <n-space justify="end">
           <n-input v-model:value="search" placeholder="搜索" round clearable>
             <template #prefix>
@@ -18,10 +24,12 @@
 import { computed, ref } from 'vue';
 import { FlashOutline } from '@vicons/ionicons5';
 import { InternalRowData } from 'naive-ui/lib/data-table/src/interface';
+import { useFullscreen } from '@vueuse/core';
 import { useOrders } from '@/data/superAdmin/order';
 import QuickTable from '@/components/quickTable/index.vue';
 import { useDelete } from '@/data/utils/useOption';
 
+const { isFullscreen } = useFullscreen();
 const { data, columns } = useOrders();
 
 const search = ref('');
