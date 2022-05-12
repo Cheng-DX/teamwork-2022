@@ -27,7 +27,7 @@ function getType(status: string) {
     case EquipmentStatus.Opened:
       return 'success';
     case EquipmentStatus.Closed:
-      return 'warning';
+      return 'default';
     case EquipmentStatus.Fault:
       return 'error';
     case EquipmentStatus.Producing:
@@ -88,7 +88,7 @@ function createColumns(data: Ref<any[]>) {
       title: '开关机',
       key: 'power',
       renderer: (row: InternalRowData) => {
-        return (<NButton strong secondary type={row.status === EquipmentStatus.Closed ? 'success' : 'error'} onClick={() => switchStatus(row.id as string, data)}>{row.status === EquipmentStatus.Closed ? '远程开机' : '远程关机'}</NButton>)
+        return (<NButton tertiary strong type={row.status === EquipmentStatus.Closed ? 'success' : 'error'} onClick={() => switchStatus(row.id as string, data)}>{row.status === EquipmentStatus.Closed ? '远程开机' : '远程关机'}</NButton>)
       }
     }
   ]
@@ -123,6 +123,6 @@ function createEquipments() {
 
 export function useEquipments() {
   const data = ref(createEquipments())
-  const columns = useTable(data, createColumns(data), 'id')
+  const columns = useTable(data, createColumns(data))
   return { data, columns }
 }

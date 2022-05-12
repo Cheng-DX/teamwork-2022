@@ -20,10 +20,10 @@ import { computed, DefineComponent, h, ref } from 'vue';
 import { useDialog } from 'naive-ui';
 import { FlashOutline } from '@vicons/ionicons5';
 import { InternalRowData } from 'naive-ui/lib/data-table/src/interface';
-import { Register } from '@/views/system-view/login/components';
 import QuickTable from '@/components/quickTable/index.vue';
 import { useProducts } from '@/data/superAdmin/product/index';
 import { useDelete } from '@/data/utils/useOption';
+import AddDialog from './components/AddDialog.vue';
 
 const { data, columns } = useProducts();
 const dialog = useDialog();
@@ -48,9 +48,9 @@ function deleteOne(row: InternalRowData) {
 
 function handleAdd() {
   dialog.info({
-    title: '添加用户',
+    title: '添加产品',
     content: () =>
-      h(Register as DefineComponent, {
+      h(AddDialog as DefineComponent, {
         disableBack: true
       })
   });

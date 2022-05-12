@@ -14,6 +14,7 @@ interface CustomFormRules {
   code: FormItemRule[];
   /** 邮箱 */
   email: FormItemRule[];
+  notBlank: FormItemRule[];
 }
 
 /** 表单规则 */
@@ -34,7 +35,8 @@ export const formRules: CustomFormRules = {
     { required: true, message: '请输入验证码' },
     { pattern: REGEXP_CODE_SIX, message: '验证码格式错误', trigger: 'input' }
   ],
-  email: [{ pattern: REGEXP_EMAIL, message: '邮箱格式错误', trigger: 'blur' }]
+  email: [{ pattern: REGEXP_EMAIL, message: '邮箱格式错误', trigger: 'blur' }],
+  notBlank: [{ required: true, message: '请输入内容', trigger: 'blur' }]
 };
 
 /** 获取确认密码的表单规则 */

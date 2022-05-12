@@ -1,5 +1,6 @@
-import { DataTableColumn, NButton } from "naive-ui"
+import { DataTableColumn, NButton, NIcon } from "naive-ui"
 import { InternalRowData } from "naive-ui/lib/data-table/src/interface"
+import { Trash } from '@vicons/ionicons5'
 
 export interface Filter {
   handler: (row: InternalRowData) => boolean
@@ -40,7 +41,12 @@ export function useDelete(deleteFn: DeleteFn, filter?: Filter): DataTableColumn 
     key: 'delete',
     align: 'center',
     render: (row: InternalRowData) => (<div class="flex justify-evenly" >
-      <NButton secondary strong onClick={() => handle(row)} type="error">删除</NButton>
+      <NButton secondary strong onClick={() => handle(row)} type="error">
+        <NIcon>
+          <Trash />
+        </NIcon>
+        删除
+      </NButton>
     </div>)
   }
 }
