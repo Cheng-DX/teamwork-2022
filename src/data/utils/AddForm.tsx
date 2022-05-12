@@ -37,7 +37,7 @@ export default defineComponent({
         if (!errors) {
           window.$message?.success('Succeed!');
         } else {
-          window.$message?.error('验证失败!');
+          window.$message?.error('未通过验证');
         }
       });
     }

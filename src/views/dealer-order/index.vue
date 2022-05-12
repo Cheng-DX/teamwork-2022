@@ -53,7 +53,7 @@ function deleteOne(row: InternalRowData) {
 }
 const dialog = useDialog();
 function handleAdd() {
-  dialog.info({
+  dialog.success({
     title: '新建订单',
     content: () =>
       h(AddForm, {
