@@ -7,6 +7,8 @@ export interface ColumnSrcItem {
   key: string;
   title: string;
   renderer?: Function;
+  width?: string;
+  align?: string;
 }
 
 export function createRenderFn(columnLabel: string, data: Ref<any[]>, valueRenderer?: Function) {
@@ -22,10 +24,12 @@ export function createRenderFn(columnLabel: string, data: Ref<any[]>, valueRende
 }
 
 export function createColumns(src: ColumnSrcItem[], data: Ref<any>) {
-  return src.map(({ key, title, renderer }) => ({
+  return src.map(({ key, title, renderer, width, align }) => ({
     title,
     key,
-    align: 'center',
-    render: renderer || createRenderFn(key, data)
+    align: align || 'center',
+    render: renderer || createRenderFn(key, data),
+    sorter: 'default',
+    width
   })) as DataTableColumn[];
 }

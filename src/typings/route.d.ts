@@ -32,6 +32,8 @@ declare namespace AuthRoute {
     | 'equipment-management'
     | 'equipment-management_equipment'
     | 'equipment-management_equipment-type'
+    // 订单
+    | 'order-management'
     | 'component'
     | 'component_button'
     | 'component_card'

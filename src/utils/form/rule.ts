@@ -36,7 +36,7 @@ export const formRules: CustomFormRules = {
     { pattern: REGEXP_CODE_SIX, message: '验证码格式错误', trigger: 'input' }
   ],
   email: [{ pattern: REGEXP_EMAIL, message: '邮箱格式错误', trigger: 'blur' }],
-  notBlank: [{ required: true, message: '请输入内容', trigger: 'blur' }]
+  notBlank: [{ required: true, message: '请输入内容', trigger: 'change' }]
 };
 
 /** 获取确认密码的表单规则 */

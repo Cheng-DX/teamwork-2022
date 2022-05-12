@@ -97,6 +97,18 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
         icon: 'carbon:machine-learning',
         order: 1
       }
+    },
+    {
+      name: 'order-management',
+      path: '/order-management',
+      component: 'self',
+      meta: {
+        title: '订单管理',
+        requiresAuth: true,
+        singleLayout: 'basic',
+        icon: 'carbon:user-profile',
+        order: 1
+      }
     }
   ],
   admin: [
