@@ -15,7 +15,7 @@ export enum EquipmentStatus {
   Producing = '生产中',
 }
 
-export enum rentStatus {
+export enum RentStatus {
   /** 租用设备 */
   Rent = '租用设备',
   /** 自有设备 */
@@ -115,7 +115,7 @@ function createEquipments() {
       description: `描述${i}`,
       status: EquipmentStatus.Opened,
       factory: `云工厂${i}`,
-      rentStatus: rentStatus.Own,
+      rentStatus: RentStatus.Own,
     })
   }
   return data
