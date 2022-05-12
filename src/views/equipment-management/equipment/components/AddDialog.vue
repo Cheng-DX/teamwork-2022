@@ -4,25 +4,31 @@
       <div class="flex-y-center w-full">
         <n-tooltip trigger="hover">
           <template #trigger>
-            <n-button type="primary" round secondary size="medium">产品编号</n-button>
+            <n-button type="primary" round secondary size="medium">设备编号</n-button>
           </template>
-          随机生成的产品编号,不可编辑
+          随机生成的设备编号,不可编辑
         </n-tooltip>
         <div class="w-18px"></div>
         <n-input v-model:value="model.id" disabled />
       </div>
     </n-form-item>
     <n-form-item path="name">
-      <n-input v-model:value="model.name" placeholder="请输入产品名" />
+      <n-input v-model:value="model.name" placeholder="请输入设备名" />
     </n-form-item>
     <n-form-item path="type">
-      <n-select v-model:value="model.type" placeholder="请选择产品类型" :options="allTypes"> </n-select>
+      <n-select v-model:value="model.type" placeholder="请选择设备类型" :options="allTypes"> </n-select>
     </n-form-item>
     <n-form-item path="spec">
-      <n-input v-model:value="model.spec" placeholder="请输入产品规格" />
+      <n-input v-model:value="model.spec" placeholder="请输入设备规格" />
     </n-form-item>
     <n-form-item path="description">
-      <n-input v-model:value="model.description" type="textarea" placeholder="请输入产品描述" />
+      <n-input v-model:value="model.description" type="textarea" placeholder="请输入设备描述" />
+    </n-form-item>
+    <n-form-item path="type">
+      <n-select v-model:value="model.status" placeholder="请选择设备状态" :options="allStatus"> </n-select>
+    </n-form-item>
+    <n-form-item path="status">
+      <n-select v-model:value="model.rentStatus" placeholder="请选择租用状态" :options="allRentStatus"> </n-select>
     </n-form-item>
     <n-space :vertical="true" :size="18">
       <n-button type="primary" size="large" :block="true" :round="true" @click="handleSubmit">确定</n-button>
@@ -35,25 +41,23 @@ import { reactive, ref } from 'vue';
 import type { FormInst, FormRules } from 'naive-ui';
 import { formRules } from '@/utils';
 
-defineProps<{
-  disableBack?: Boolean;
-}>();
-
 const formRef = ref<(HTMLElement & FormInst) | null>(null);
 const model = reactive({
-  id: `PNO${Math.round(new Date().getTime() + 839123832 * Math.random())}`,
+  id: `DNO${Math.round(new Date().getTime() + 6839123832 * Math.random())}`,
   name: '',
-  type: '',
+  type: null,
   spec: '',
-  description: ''
+  description: '',
+  status: null,
+  rentStatus: null,
+  factory: ''
 });
 
-const allTypes = ref<
-  {
-    label: string;
-    value: string;
-  }[]
->([]);
+interface Option {
+  label: string;
+  value: string;
+}
+const allTypes = ref<Option[]>([]);
 
 for (let i = 0; i < 5; i++) {
   allTypes.value.push({
@@ -61,13 +65,28 @@ for (let i = 0; i < 5; i++) {
     value: `type${i}`
   });
 }
-model.type = allTypes.value[0].value;
+
+const allStatus = ref<Option[]>([
+  { value: 'opened', label: '闲置中' },
+  { value: 'closed', label: '已关机' },
+  { value: 'fault', label: '故障中' },
+  { value: 'producing', label: '生产中' }
+]);
+
+const allRentStatus = ref<Option[]>([
+  { value: 'rent', label: '租用设备' },
+  { value: 'own', label: '自有设备' }
+]);
+
 const rules: FormRules = {
   id: formRules.notBlank,
   name: formRules.notBlank,
   type: formRules.notBlank,
   spec: formRules.notBlank,
-  description: formRules.notBlank
+  description: formRules.notBlank,
+  status: formRules.notBlank,
+  rentStatus: formRules.notBlank,
+  factory: formRules.notBlank
 };
 
 function handleSubmit(e: MouseEvent) {

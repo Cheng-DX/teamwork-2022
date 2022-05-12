@@ -7,10 +7,13 @@
 </template>
 
 <script setup lang="ts">
+import { h, DefineComponent } from 'vue';
+import { useDialog } from 'naive-ui';
 import { InternalRowData } from 'naive-ui/lib/data-table/src/interface';
 import QuickTable from '@/components/quickTable/index.vue';
 import { useTypeManagement } from '@/data/superAdmin/type/useType';
 import { useDelete } from '@/data/utils/useOption';
+import AddDialog from './components/AddDialog.vue';
 
 const prefix = '设备';
 const { data, columns } = useTypeManagement(prefix);
@@ -23,9 +26,15 @@ function deleteOne(row: InternalRowData) {
     1
   );
 }
-
+const dialog = useDialog();
 function handleAdd() {
-  console.log('添加');
+  dialog.info({
+    title: '添加设备类别',
+    content: () =>
+      h(AddDialog as DefineComponent, {
+        disableBack: true
+      })
+  });
 }
 </script>
 <style scoped></style>
