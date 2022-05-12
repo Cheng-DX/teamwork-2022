@@ -9,9 +9,9 @@ export interface ColumnSrcItem {
   renderer?: Function;
   width?: string;
   align?: string;
-  defaultValue?: string | number;
   form?: {
     type: 'input' | 'number' | 'textarea' | 'date' | 'select';
+    defaultValue?: string | number;
     placeholder?: string;
     options?: Array<{ label: string; value: string }>;
     disabled?: boolean;

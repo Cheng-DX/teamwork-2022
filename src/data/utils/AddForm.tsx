@@ -44,7 +44,8 @@ export default defineComponent({
 
     for (const columnSrc of props.columnSrcs) {
       rules[columnSrc.key] = columnSrc?.form?.type === 'number' ? formRules.biggerThenZeroInt : formRules.notBlank;
-      if (columnSrc.defaultValue === undefined || columnSrc.defaultValue === null) {
+      const defaultValue = columnSrc.form?.defaultValue
+      if (defaultValue === undefined || defaultValue === null) {
         if (columnSrc?.form?.creator) {
           model[columnSrc.key] = columnSrc.form.creator();
         } else {
@@ -61,13 +62,13 @@ export default defineComponent({
       } else {
         switch (columnSrc?.form?.type) {
           case 'number':
-            model[columnSrc.key] = Number(columnSrc.defaultValue);
+            model[columnSrc.key] = Number(defaultValue);
             break;
           case 'input':
-            model[columnSrc.key] = String(columnSrc.defaultValue);
+            model[columnSrc.key] = String(defaultValue);
             break;
           case 'select':
-            model[columnSrc.key] = columnSrc.defaultValue;
+            model[columnSrc.key] = defaultValue;
             break;
           default:
             model[columnSrc.key] = ''
