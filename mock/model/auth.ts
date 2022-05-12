@@ -34,7 +34,7 @@ export const userModel: UserModel[] = [
     refreshToken: '__REFRESH_TOKEN_USER01__',
     userId: '3',
     userName: 'Dealer',
-    userRole: 'user',
+    userRole: 'dealer',
     password: 'user01123'
   }
 ];

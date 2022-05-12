@@ -8,6 +8,10 @@ export function switchType(type: string) {
       return 'success';
     case 'producing':
       return 'info';
+    case 'unpublished':
+      return 'warning';
+    case 'published':
+      return 'primary';
     default:
       return 'error';
   }

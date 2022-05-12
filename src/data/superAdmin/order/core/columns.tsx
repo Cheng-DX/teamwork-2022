@@ -97,7 +97,7 @@ export const columnSrc: ColumnSrcItem[] = [
         return (
           <div class="w-full">
             <NSpace vertical={true} size={18} >
-              <NButton disabled strong type={switchType(value as string)} round size="large" block={true}>{
+              <NButton secondary strong type={switchType(value as string)} round size="large" block={true}>{
                 orderStatus.find(item => item.value === value)?.label
               }</NButton>
             </NSpace>

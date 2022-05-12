@@ -8,6 +8,7 @@
 </template>
 
 <script lang="ts" setup>
+import { h } from 'vue';
 import { useAuthStore, useThemeStore } from '@/store';
 import { iconifyRender } from '@/utils';
 
@@ -44,6 +45,11 @@ function handleDropdown(optionKey: string) {
       onPositiveClick: () => {
         auth.resetAuthStore();
       }
+    });
+  } else if (key === 'user-center') {
+    window.$dialog?.info({
+      title: '用户中心',
+      content: () => h('h1', '用户中心')
     });
   }
 }

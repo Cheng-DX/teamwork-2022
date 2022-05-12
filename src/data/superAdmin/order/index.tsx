@@ -1,8 +1,8 @@
 import { ref } from 'vue';
 import { useTable } from '@/data/utils/useTable'
-import { createDate } from './utils/functions';
-import { names, orderStatus } from './utils/data';
-import { columnSrc } from './utils/columns';
+import { createDate } from './core/functions';
+import { names, orderStatus } from './core/data';
+import { columnSrc } from './core/columns';
 
 function createOrders() {
   const data = [];

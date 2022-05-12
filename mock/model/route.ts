@@ -109,18 +109,6 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
         icon: 'carbon:user-profile',
         order: 1
       }
-    },
-    {
-      name: 'dealer-order',
-      path: '/dealer-order',
-      component: 'self',
-      meta: {
-        title: '经销商订单',
-        requiresAuth: true,
-        singleLayout: 'basic',
-        icon: 'carbon:user-profile',
-        order: 1
-      }
     }
   ],
   admin: [
@@ -134,28 +122,53 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
           path: '/dashboard/analysis',
           component: 'self',
           meta: {
-            title: '分析页',
+            title: '流量分析',
             requiresAuth: true,
             icon: 'icon-park-outline:analysis'
-          }
-        },
-        {
-          name: 'dashboard_workbench',
-          path: '/dashboard/workbench',
-          component: 'self',
-          meta: {
-            title: '工作台',
-            requiresAuth: true,
-            icon: 'icon-park-outline:workbench'
           }
         }
       ],
       meta: {
-        title: '仪表盘',
-        icon: 'carbon:dashboard',
+        title: '数据总览',
+        icon: 'carbon:analytics',
         order: 1
       }
     }
   ],
-  dealer: []
+  dealer: [
+    {
+      name: 'dashboard',
+      path: '/dashboard',
+      component: 'basic',
+      children: [
+        {
+          name: 'dashboard_analysis',
+          path: '/dashboard/analysis',
+          component: 'self',
+          meta: {
+            title: '流量分析',
+            requiresAuth: true,
+            icon: 'icon-park-outline:analysis'
+          }
+        }
+      ],
+      meta: {
+        title: '数据总览',
+        icon: 'carbon:analytics',
+        order: 1
+      }
+    },
+    {
+      name: 'dealer-order',
+      path: '/dealer-order',
+      component: 'self',
+      meta: {
+        title: '经销商订单',
+        requiresAuth: true,
+        singleLayout: 'basic',
+        icon: 'carbon:user-profile',
+        order: 1
+      }
+    }
+  ]
 };
