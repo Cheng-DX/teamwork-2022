@@ -138,5 +138,5 @@ function createOrders() {
 export function useOrders() {
   const data = ref(createOrders())
   const columns = useTable(data, columnSrc)
-  return { data, columns }
+  return { data, columns, columnSrc }
 }

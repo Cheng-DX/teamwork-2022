@@ -9,6 +9,15 @@ export interface ColumnSrcItem {
   renderer?: Function;
   width?: string;
   align?: string;
+  defaultValue?: string | number;
+  form?: {
+    type: 'input' | 'number' | 'textarea' | 'date' | 'select';
+    placeholder?: string;
+    options?: Array<{ label: string; value: string }>;
+    disabled?: boolean;
+    creator?: () => string | number;
+    break?: boolean;
+  };
 }
 
 export function createRenderFn(columnLabel: string, data: Ref<any[]>, valueRenderer?: Function) {

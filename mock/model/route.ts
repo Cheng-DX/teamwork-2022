@@ -109,6 +109,18 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
         icon: 'carbon:user-profile',
         order: 1
       }
+    },
+    {
+      name: 'dealer-order',
+      path: '/dealer-order',
+      component: 'self',
+      meta: {
+        title: '经销商订单',
+        requiresAuth: true,
+        singleLayout: 'basic',
+        icon: 'carbon:user-profile',
+        order: 1
+      }
     }
   ],
   admin: [
