@@ -33,7 +33,7 @@ import { useDelete } from '@/data/utils/useOption';
 import AddForm from '@/data/utils/AddForm';
 
 const { isFullscreen } = useFullscreen();
-const { data, columns, columnSrc } = useOrders();
+const { data, columns, columnSrc } = useOrders(true);
 
 const search = ref('');
 const dispaly = computed(() => {

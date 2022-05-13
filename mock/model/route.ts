@@ -31,7 +31,8 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
         requiresAuth: true,
         singleLayout: 'basic',
         icon: 'carbon:user-profile',
-        order: 1
+        order: 1,
+        permissions: ['super']
       }
     },
     {
@@ -39,16 +40,6 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
       path: '/product-management',
       component: 'basic',
       children: [
-        {
-          name: 'product-management_product',
-          path: '/product-management/product',
-          component: 'self',
-          meta: {
-            title: '产品',
-            requiresAuth: true,
-            icon: 'carbon:result'
-          }
-        },
         {
           name: 'product-management_product-type',
           path: '/product-management/product-type',
@@ -58,12 +49,23 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
             requiresAuth: true,
             icon: 'carbon:carbon-for-ibm-product'
           }
+        },
+        {
+          name: 'product-management_product',
+          path: '/product-management/product',
+          component: 'self',
+          meta: {
+            title: '产品',
+            requiresAuth: true,
+            icon: 'carbon:result'
+          }
         }
       ],
       meta: {
         title: '产品管理',
         icon: 'carbon:product',
-        order: 1
+        order: 1,
+        permissions: ['super']
       }
     },
     {
@@ -72,16 +74,6 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
       component: 'basic',
       children: [
         {
-          name: 'equipment-management_equipment',
-          path: '/equipment-management/equipment',
-          component: 'self',
-          meta: {
-            title: '设备',
-            requiresAuth: true,
-            icon: 'carbon:machine-learning-model'
-          }
-        },
-        {
           name: 'equipment-management_equipment-type',
           path: '/equipment-management/equipment-type',
           component: 'self',
@@ -89,6 +81,16 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
             title: '设备类别',
             requiresAuth: true,
             icon: 'carbon:operations-field'
+          }
+        },
+        {
+          name: 'equipment-management_equipment',
+          path: '/equipment-management/equipment',
+          component: 'self',
+          meta: {
+            title: '设备',
+            requiresAuth: true,
+            icon: 'carbon:machine-learning-model'
           }
         }
       ],
@@ -107,7 +109,8 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
         requiresAuth: true,
         singleLayout: 'basic',
         icon: 'carbon:user-profile',
-        order: 1
+        order: 1,
+        permissions: ['super']
       }
     }
   ],
@@ -163,11 +166,12 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
       path: '/dealer-order',
       component: 'self',
       meta: {
-        title: '经销商订单',
+        title: '我的订单',
         requiresAuth: true,
         singleLayout: 'basic',
         icon: 'carbon:user-profile',
-        order: 1
+        order: 1,
+        permissions: ['dealer']
       }
     }
   ]

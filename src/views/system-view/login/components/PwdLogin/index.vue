@@ -32,6 +32,7 @@
       </div>
     </n-space>
     <other-account @login="handleLoginOtherAccount" />
+    <other-platform />
   </n-form>
 </template>
 
@@ -42,7 +43,7 @@ import { EnumLoginModule } from '@/enum';
 import { useAuthStore } from '@/store';
 import { useRouterPush } from '@/composables';
 import { formRules } from '@/utils';
-import { OtherAccount } from './components';
+import { OtherAccount, OtherPlatform } from './components';
 
 const auth = useAuthStore();
 const { login } = useAuthStore();

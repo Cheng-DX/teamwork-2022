@@ -8,6 +8,7 @@ export const columnSrc: ColumnSrcItem[] = [
   {
     title: '序号',
     key: 'index',
+    disabled: true,
     form: {
       type: 'input',
       break: true,

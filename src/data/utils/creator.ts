@@ -9,6 +9,7 @@ export interface ColumnSrcItem {
   renderer?: Function;
   width?: string;
   align?: string;
+  disabled?: boolean;
   form?: {
     type: 'input' | 'number' | 'textarea' | 'date' | 'select';
     defaultValue?: string | number;
@@ -21,9 +22,9 @@ export interface ColumnSrcItem {
   };
 }
 
-export function createRenderFn(columnLabel: string, data: Ref<any[]>, editable?: boolean) {
+export function createRenderFn(columnLabel: string, data: Ref<any[]>, editable?: boolean, disabled?: boolean) {
   return function render(row: InternalRowData, index: number) {
-    return editable
+    return editable && !disabled
       ? h(ShowOrEdit, {
           value: row[columnLabel],
           onUpdateValue(v: any) {
@@ -36,11 +37,11 @@ export function createRenderFn(columnLabel: string, data: Ref<any[]>, editable?:
 }
 
 export function createColumns(src: ColumnSrcItem[], data: Ref<any>, editable?: boolean) {
-  return src.map(({ key, title, renderer, width, align }) => ({
+  return src.map(({ key, title, renderer, width, align, disabled }) => ({
     title,
     key,
     align: align || 'center',
-    render: renderer || createRenderFn(key, data, editable),
+    render: renderer || createRenderFn(key, data, editable, disabled),
     sorter: 'default',
     width
   })) as DataTableColumn[];
