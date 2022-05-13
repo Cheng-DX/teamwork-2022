@@ -27,14 +27,17 @@
 
 <script lang="ts" setup>
 import { computed, ref, h } from 'vue';
-import { useDialog, NInput, NIcon } from 'naive-ui';
+import { useDialog, NInput, NIcon, useMessage } from 'naive-ui';
 import { FlashOutline } from '@vicons/ionicons5';
 import { InternalRowData } from 'naive-ui/lib/data-table/src/interface';
 import { useFullscreen } from '@vueuse/core';
 import { useMyFactory } from '@/data/facAdmin/my-factory';
 import QuickTable from '@/components/quickTable/index.vue';
-import { useDelete, useRent } from '@/data/utils/useOption';
+import { useDelete, useRent, useEdit, type Filter, useConfig } from '@/data/utils/useOption';
 import AddForm from '@/data/utils/AddForm';
+import { RentStatus } from '@/data/superAdmin/equipment';
+import ConfigPanelVue from './components/ConfigPanel.vue';
+import ConfigPanel from './components/ConfigPanel.vue';
 
 const { isFullscreen } = useFullscreen();
 const { data, columns, columnSrcs } = useMyFactory(true);
@@ -47,8 +50,36 @@ const dispaly = computed(() => {
   return data.value;
 });
 
-columns.value.push(useDelete(deleteOne));
+const message = useMessage();
+const filter: Filter = {
+  handler: (item: InternalRowData) => item.source === RentStatus.Own,
+  rejectAction: () => message.error('租用设备无法执行该操作'),
+  returnImdiately: true
+};
 
+function config(row: InternalRowData) {
+  dialog.info({
+    title: '配置产品',
+    style: {
+      width: '60vw'
+    },
+    content: () => {
+      return h(ConfigPanel, {
+        id: row.id,
+        name: row.name
+      });
+    },
+    positiveText: '保存',
+    negativeText: '取消',
+    onPositiveClick: () => {
+      message.success('配置已保存！');
+    }
+  });
+}
+
+columns.value.push(useEdit(columnSrcs, filter));
+columns.value.push(useConfig(config));
+columns.value.push(useDelete(deleteOne, filter));
 function deleteOne(row: InternalRowData) {
   data.value.splice(
     data.value.findIndex(item => item.name === row.name),

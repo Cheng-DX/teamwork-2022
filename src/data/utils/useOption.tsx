@@ -299,3 +299,16 @@ export function useHandleOrder(columnSrcs: ColumnSrcItem[], changeStatus: Functi
     }
   }
 }
+
+export function useConfig(action: Function) {
+  return {
+    title: '配置产品',
+    key: 'config',
+    align: 'center',
+    render: (row: InternalRowData) => (<div class="flex justify-evenly" >
+      <NButton secondary strong onClick={() => action(row)} type="success">
+        配置产品
+      </NButton>
+    </div>)
+  }
+}

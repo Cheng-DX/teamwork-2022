@@ -2,7 +2,7 @@
   <n-loading-bar-provider>
     <n-dialog-provider>
       <n-notification-provider>
-        <n-message-provider>
+        <n-message-provider placement="bottom-left">
           <slot></slot>
           <naive-provider-content />
         </n-message-provider>

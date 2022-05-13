@@ -94,10 +94,12 @@ function createColumns(data: Ref<any[]>) {
       title: '设备来源',
       key: 'source',
       form: {
+        defaultValue: RentStatus.Own,
+        disabled: true,
         type: 'select',
         options: [
-          { label: '自有设备', value: 'source1' },
-          { label: '租用设备', value: 'source2' },
+          { label: '自有设备', value: RentStatus.Own },
+          { label: '租用设备', value: RentStatus.Rent },
         ]
       }
     },
@@ -134,7 +136,7 @@ function createColumns(data: Ref<any[]>) {
             <div class="w-full">
               <NSpace vertical={true} size={18} >
                 <NButton secondary strong type="warning" round size="large" block={true}>
-                  已关机
+                  {value}
                 </NButton>
               </NSpace>
             </div>
@@ -176,7 +178,7 @@ function createEquipments() {
       factory: '我的工厂',
       description: `描述${i}`,
       status: EquipmentStatus.Opened,
-      source: i % 2 === 0 ? '租用设备' : '自有设备',
+      source: i % 2 === 0 ? RentStatus.Own : RentStatus.Rent,
     })
   }
   return data
