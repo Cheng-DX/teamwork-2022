@@ -37,6 +37,11 @@ declare namespace AuthRoute {
     | 'order-management'
     // 经销商订单
     | 'dealer-order'
+    // 工厂
+    | 'factory-mine'
+    | 'factory-order'
+    | 'factory-order_accept'
+    | 'factory-order_produce'
     | 'component'
     | 'component_button'
     | 'component_card'

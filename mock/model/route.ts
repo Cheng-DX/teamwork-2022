@@ -149,6 +149,49 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
         icon: 'carbon:analytics',
         order: 1
       }
+    },
+    {
+      name: 'factory-mine',
+      path: '/factory-mine',
+      component: 'self',
+      meta: {
+        title: '我的工厂',
+        requiresAuth: true,
+        singleLayout: 'basic',
+        icon: 'carbon:datastore'
+      }
+    },
+    {
+      name: 'factory-order',
+      path: '/factory-order',
+      component: 'basic',
+      children: [
+        {
+          name: 'factory-order_accept',
+          path: '/factory-order/accept',
+          component: 'self',
+          meta: {
+            title: '订单接单',
+            requiresAuth: true,
+            icon: 'icon-park-outline:analysis'
+          }
+        },
+        {
+          name: 'factory-order_produce',
+          path: '/factory-order/produce',
+          component: 'self',
+          meta: {
+            title: '订单排产',
+            requiresAuth: true,
+            icon: 'icon-park-outline:analysis'
+          }
+        }
+      ],
+      meta: {
+        title: '订单',
+        icon: 'carbon:analytics',
+        order: 1
+      }
     }
   ],
   dealer: [
