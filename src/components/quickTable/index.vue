@@ -3,6 +3,10 @@
     <n-card :title="title" class="shadow-sm rounded-16px">
       <n-space vertical>
         <slot></slot>
+        <n-space justify="space-between">
+          <slot name="start"></slot>
+          <slot name="tail"></slot>
+        </n-space>
         <loading-empty-wrapper :loading="loading" :empty="empty">
           <n-data-table
             :columns="columns"

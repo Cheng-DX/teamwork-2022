@@ -24,6 +24,7 @@ declare namespace AuthRoute {
     | 'document_project'
     // 用户管理
     | 'user-management'
+    | 'factory-management'
     // 产品管理
     | 'product-management'
     | 'product-management_product'

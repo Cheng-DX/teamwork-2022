@@ -11,7 +11,7 @@ export interface ColumnSrcItem {
   align?: string;
   disabled?: boolean;
   form?: {
-    type: 'input' | 'number' | 'textarea' | 'date' | 'select';
+    type?: 'input' | 'number' | 'textarea' | 'date' | 'select';
     defaultValue?: string | number;
     placeholder?: string;
     options?: Array<{ label: string; value: string }>;
@@ -19,6 +19,7 @@ export interface ColumnSrcItem {
     creator?: () => string | number;
     break?: boolean;
     renderer?: (value: string | number) => any;
+    validator?: (value: string | number) => boolean;
   };
 }
 

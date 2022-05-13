@@ -26,6 +26,6 @@ function createTypes(prefix: string) {
 
 export function useTypeManagement(prefix: string) {
   const data = ref(createTypes(prefix))
-  const columns = useTable(data, columnSrc, 'index')
+  const columns = useTable(data, columnSrc, true)
   return { data, columns }
 }

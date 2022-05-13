@@ -53,6 +53,6 @@ function createProducts() {
 
 export function useProducts() {
   const data = ref(createProducts())
-  const columns = useTable(data, columnSrc, 'id')
+  const columns = useTable(data, columnSrc, true)
   return { data, columns }
 }

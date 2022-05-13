@@ -36,6 +36,19 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
       }
     },
     {
+      name: 'factory-management',
+      path: '/factory-management',
+      component: 'self',
+      meta: {
+        title: '工厂管理',
+        requiresAuth: true,
+        singleLayout: 'basic',
+        icon: 'carbon:datastore',
+        order: 1,
+        permissions: ['super']
+      }
+    },
+    {
       name: 'product-management',
       path: '/product-management',
       component: 'basic',
@@ -108,7 +121,7 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
         title: '订单管理',
         requiresAuth: true,
         singleLayout: 'basic',
-        icon: 'carbon:user-profile',
+        icon: 'carbon:border-full',
         order: 1,
         permissions: ['super']
       }
@@ -169,7 +182,7 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
         title: '我的订单',
         requiresAuth: true,
         singleLayout: 'basic',
-        icon: 'carbon:user-profile',
+        icon: 'carbon:order-details',
         order: 1,
         permissions: ['dealer']
       }

@@ -66,12 +66,7 @@ export function useRouterPush(inSetup = true) {
    * 登录成功后跳转重定向的地址
    */
   function toLoginRedirect() {
-    const { query } = route.value;
-    if (query?.redirect) {
-      routerPush(query.redirect as string);
-    } else {
-      toHome();
-    }
+    toHome();
   }
 
   return {
