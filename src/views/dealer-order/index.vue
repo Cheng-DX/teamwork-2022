@@ -23,17 +23,17 @@
 
 <script lang="ts" setup>
 import { computed, ref, h } from 'vue';
-import { useDialog } from 'naive-ui';
+import { useDialog, useMessage } from 'naive-ui';
 import { FlashOutline } from '@vicons/ionicons5';
 import { InternalRowData } from 'naive-ui/lib/data-table/src/interface';
 import { useFullscreen } from '@vueuse/core';
-import { useOrders } from '@/data/dealer/order';
+import { useOrders } from '@/data/superAdmin/order';
 import QuickTable from '@/components/quickTable/index.vue';
-import { useDelete } from '@/data/utils/useOption';
+import { type Filter, useDelete, useHandleOrder } from '@/data/utils/useOption';
 import AddForm from '@/data/utils/AddForm';
 
 const { isFullscreen } = useFullscreen();
-const { data, columns, columnSrc } = useOrders(true);
+const { data, columns, columnSrc } = useOrders(false);
 
 const search = ref('');
 const dispaly = computed(() => {
@@ -43,7 +43,23 @@ const dispaly = computed(() => {
   return data.value;
 });
 
-columns.value.push(useDelete(deleteOne));
+const message = useMessage();
+const filter: Filter = {
+  handler: row => row.status === 'unpublished' || row.status === 'finished',
+  rejectAction: () => {
+    message.error('只有未发布和已完成的订单可以删除');
+  },
+  returnImdiately: true
+};
+
+function changeStatus(row: InternalRowData, target: string) {
+  const order = data.value.find(item => item.id === row.id);
+  if (order) {
+    order.status = target;
+  }
+}
+columns.value.push(useHandleOrder(columnSrc, changeStatus));
+columns.value.push(useDelete(deleteOne, filter));
 
 function deleteOne(row: InternalRowData) {
   data.value.splice(

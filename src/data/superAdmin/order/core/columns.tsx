@@ -33,7 +33,7 @@ export const columnSrcs: ColumnSrcItem[] = [
     renderer: (row: InternalRowData) => {
       return <NInputNumber disabled v-model:value={row.number} validator={(v) => v > 0} />
     },
-    width: '130px',
+    width: '120px',
     form: {
       type: 'number',
     }
@@ -74,7 +74,7 @@ export const columnSrcs: ColumnSrcItem[] = [
     renderer: (row: InternalRowData) => {
       return <NInput disabled v-model:value={row.address} type="textarea" />
     },
-    width: '200px',
+    width: '100px',
     align: 'left',
     form: {
       type: 'textarea',
