@@ -10,8 +10,9 @@ function createColumns(data: Ref<any[]>) {
     {
       title: '序号',
       key: 'index',
+      disabled: true,
       form: {
-        type: 'input',
+        disabled: true,
         break: true
       }
     },
@@ -53,8 +54,8 @@ function createColumns(data: Ref<any[]>) {
           return (
             <div class="w-full">
               <NSpace vertical={true} size={18} >
-                <NButton secondary strong type="success" round size="large" block={true}>
-                  正常
+                <NButton secondary strong type={value === 'normal' ? 'success' : 'error'} round size="large" block={true}>
+                  {value === 'normal' ? '正常' : '关停'}
                 </NButton>
               </NSpace>
             </div>

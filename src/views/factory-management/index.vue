@@ -21,7 +21,7 @@ import { useDialog } from 'naive-ui';
 import { FlashOutline } from '@vicons/ionicons5';
 import { InternalRowData } from 'naive-ui/lib/data-table/src/interface';
 import QuickTable from '@/components/quickTable/index.vue';
-import { useDelete } from '@/data/utils/useOption';
+import { useDelete, useEdit } from '@/data/utils/useOption';
 import { useFactories } from '@/data/superAdmin/factory';
 import AddForm from '@/data/utils/AddForm';
 
@@ -35,7 +35,7 @@ const dispaly = computed(() => {
   }
   return data.value;
 });
-
+columns.value.push(useEdit(columnSrcs));
 columns.value.push(useDelete(deleteOne));
 
 function deleteOne(row: InternalRowData) {

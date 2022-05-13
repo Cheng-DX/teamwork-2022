@@ -2,14 +2,18 @@ import { ref } from 'vue';
 import { useTable } from '@/data/utils/useTable'
 import { type ColumnSrcItem } from '@/data/utils/creator';
 
-const columnSrc: ColumnSrcItem[] = [
+const columnSrcs: ColumnSrcItem[] = [
   {
     title: '序号',
     key: 'index',
+    form: {
+      break: true,
+    }
   },
   {
     title: '类别名称',
     key: 'name',
+
   }
 ]
 
@@ -26,6 +30,6 @@ function createTypes(prefix: string) {
 
 export function useTypeManagement(prefix: string) {
   const data = ref(createTypes(prefix))
-  const columns = useTable(data, columnSrc, true)
-  return { data, columns }
+  const columns = useTable(data, columnSrcs, true)
+  return { data, columns, columnSrcs }
 }

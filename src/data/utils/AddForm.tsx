@@ -1,6 +1,7 @@
 import { formRules } from '@/utils';
 import { FormInst, FormRules, NButton, NDatePicker, NForm, NFormItem, NInput, NInputNumber, NSelect, NSpace } from 'naive-ui';
 import { defineComponent, type DefineComponent, reactive, ref, PropType } from 'vue';
+import { columnSrc } from '../dealer/order/core/columns';
 import { ColumnSrcItem } from './creator';
 
 export interface AddFormProps {
@@ -74,10 +75,12 @@ export default defineComponent({
             model[columnSrc.key] = ''
             break;
         }
+        model[columnSrc.key] = defaultValue;
       }
     }
 
     function switchFormItem(colmunSrc: ColumnSrcItem, model: any) {
+      console.log(colmunSrc)
       const placeholder = colmunSrc?.form?.placeholder || `请${colmunSrc?.form?.type === 'select' ? '选择' : '输入'}${colmunSrc.title}`;
       const disabled = colmunSrc?.form?.disabled || false;
       if (colmunSrc.form?.renderer) {

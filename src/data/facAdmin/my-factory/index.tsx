@@ -42,7 +42,9 @@ function createColumns(data: Ref<any[]>) {
     {
       title: '序号',
       key: 'index',
+      disabled: true,
       form: {
+        disabled: true,
         break: true,
       }
     },
@@ -180,9 +182,9 @@ function createEquipments() {
   return data
 }
 
-export function useMyFactory() {
+export function useMyFactory(editable?: boolean) {
   const data = ref(createEquipments())
   const columnSrcs = createColumns(data)
-  const columns = useTable(data, columnSrcs, true)
+  const columns = useTable(data, columnSrcs, editable)
   return { data, columns, columnSrcs }
 }

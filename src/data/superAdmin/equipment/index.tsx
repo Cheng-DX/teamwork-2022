@@ -37,17 +37,36 @@ function getType(status: string) {
   }
 }
 
+const allStatus = [
+  { value: 'opened', label: '闲置中' },
+  { value: 'closed', label: '已关机' },
+  { value: 'fault', label: '故障中' },
+  { value: 'producing', label: '生产中' }
+];
+
+const allRentStatus = [
+  { value: 'rent', label: '租用设备' },
+  { value: 'own', label: '自有设备' }
+];
+
 function createColumns(data: Ref<any[]>) {
   const columnSrc: ColumnSrcItem[] = [
     {
       title: '序号',
       key: 'index',
+      form: {
+        break: true,
+      }
     },
     {
       title: '设备编号',
       key: 'id',
       renderer: (row: InternalRowData) => {
         return (<span>{row.id}</span>)
+      },
+      disabled: true,
+      form: {
+        disabled: true
       }
     },
     {
@@ -59,6 +78,19 @@ function createColumns(data: Ref<any[]>) {
       key: 'type',
       renderer: (row: InternalRowData) => {
         return (<span >{row.type}</span>)
+      },
+      form: {
+        type: 'select',
+        options: (() => {
+          const types = []
+          for (let i = 0; i < 40; i++) {
+            types.push({
+              label: `类别${i}`,
+              value: `类别${i}`,
+            })
+          }
+          return types
+        })()
       }
     },
     {
@@ -68,12 +100,19 @@ function createColumns(data: Ref<any[]>) {
     {
       title: '设备描述',
       key: 'description',
+      form: {
+        type: 'textarea',
+      }
     },
     {
       title: '设备状态',
       key: 'status',
       renderer: (row: InternalRowData) => {
         return (<NTag strong type={getType(row.status as string)} >{row.status}</NTag>)
+      },
+      form: {
+        type: 'select',
+        options: allStatus
       }
     },
     {
@@ -83,12 +122,19 @@ function createColumns(data: Ref<any[]>) {
     {
       title: '租用状态',
       key: 'rentStatus',
+      form: {
+        type: 'select',
+        options: allRentStatus
+      }
     },
     {
       title: '开关机',
       key: 'power',
       renderer: (row: InternalRowData) => {
         return (<NButton tertiary strong type={row.status === EquipmentStatus.Closed ? 'success' : 'error'} onClick={() => switchStatus(row.id as string, data)}>{row.status === EquipmentStatus.Closed ? '远程开机' : '远程关机'}</NButton>)
+      },
+      form: {
+        break: true
       }
     }
   ]
@@ -123,6 +169,7 @@ function createEquipments() {
 
 export function useEquipments() {
   const data = ref(createEquipments())
-  const columns = useTable(data, createColumns(data), true)
-  return { data, columns }
+  const columnSrcs = createColumns(data)
+  const columns = useTable(data, columnSrcs, true)
+  return { data, columns, columnSrcs }
 }

@@ -8,10 +8,18 @@ const columnSrc: ColumnSrcItem[] = [
   {
     title: '序号',
     key: 'index',
+    form: {
+      break: true,
+    }
   },
   {
     title: '产品编号',
+    disabled: true,
     key: 'id',
+    form: {
+      type: 'input',
+      disabled: true,
+    }
   },
   {
     title: '产品名称',
@@ -22,6 +30,19 @@ const columnSrc: ColumnSrcItem[] = [
     key: 'type',
     renderer: (row: InternalRowData) => {
       return (<NTag >{row.type}</NTag>)
+    },
+    form: {
+      type: 'select',
+      options: (() => {
+        const types = []
+        for (let i = 0; i < 40; i++) {
+          types.push({
+            label: `类别${i}`,
+            value: `类别${i}`,
+          })
+        }
+        return types
+      })()
     }
   },
   {
@@ -31,6 +52,9 @@ const columnSrc: ColumnSrcItem[] = [
   {
     title: '产品描述',
     key: 'description',
+    form: {
+      type: 'textarea',
+    }
   },
 ]
 
@@ -54,5 +78,5 @@ function createProducts() {
 export function useProducts() {
   const data = ref(createProducts())
   const columns = useTable(data, columnSrc, true)
-  return { data, columns }
+  return { data, columns, columnSrc }
 }

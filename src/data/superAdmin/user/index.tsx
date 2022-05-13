@@ -70,5 +70,5 @@ function createUsers() {
 export function useUsers() {
   const data = ref(createUsers())
   const columns = useTable(data, columnSrc, true)
-  return { data, columns }
+  return { data, columns, columnSrc }
 }

@@ -12,12 +12,13 @@ import { useDialog } from 'naive-ui';
 import { InternalRowData } from 'naive-ui/lib/data-table/src/interface';
 import QuickTable from '@/components/quickTable/index.vue';
 import { useTypeManagement } from '@/data/superAdmin/type/useType';
-import { useDelete } from '@/data/utils/useOption';
+import { useDelete, useEdit } from '@/data/utils/useOption';
 import AddDialog from './components/AddDialog.vue';
 
 const prefix = '设备';
-const { data, columns } = useTypeManagement(prefix);
+const { data, columns, columnSrcs } = useTypeManagement(prefix);
 
+columns.value.push(useEdit(columnSrcs));
 columns.value.push(useDelete(deleteOne));
 
 function deleteOne(row: InternalRowData) {

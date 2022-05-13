@@ -22,10 +22,10 @@ import { FlashOutline } from '@vicons/ionicons5';
 import { InternalRowData } from 'naive-ui/lib/data-table/src/interface';
 import QuickTable from '@/components/quickTable/index.vue';
 import { useEquipments } from '@/data/superAdmin/equipment/index';
-import { useDelete } from '@/data/utils/useOption';
+import { useDelete, useEdit } from '@/data/utils/useOption';
 import AddDialogVue from './components/AddDialog.vue';
 
-const { data, columns } = useEquipments();
+const { data, columns, columnSrcs } = useEquipments();
 const dialog = useDialog();
 
 const search = ref('');
@@ -36,6 +36,7 @@ const dispaly = computed(() => {
   return data.value;
 });
 
+columns.value.push(useEdit(columnSrcs));
 columns.value.push(useDelete(deleteOne));
 
 function deleteOne(row: InternalRowData) {
