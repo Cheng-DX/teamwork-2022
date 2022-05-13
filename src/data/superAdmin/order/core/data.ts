@@ -16,7 +16,7 @@ export const orderStatus = [
     value: 'producing'
   },
   {
-    label: '生产结束',
+    label: '已完工',
     value: 'produced'
   },
   {

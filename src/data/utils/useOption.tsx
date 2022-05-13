@@ -1,9 +1,10 @@
-import { DataTableColumn, NButton, NIcon, NSpace } from "naive-ui"
+import { DataTableColumn, NButton, NIcon, NInput, NInputNumber, NSpace } from "naive-ui"
 import { InternalRowData } from "naive-ui/lib/data-table/src/interface"
 import { Add, Trash, Pencil } from '@vicons/ionicons5'
 import AddForm from "./AddForm"
 import { ColumnSrcItem } from "./creator"
 import { orderStatus } from "../superAdmin/order/core"
+import { ref } from "vue"
 
 export interface Filter {
   handler: (row: InternalRowData) => boolean
@@ -176,10 +177,38 @@ function change(row: InternalRowData, changeStatus: Function, target: string) {
   })
 }
 
-function bid(row: InternalRowData, changeStatus: Function, target: string) {
+function bid(row: InternalRowData, changeStatus: Function) {
+  const value = ref(0)
 
+  window.$dialog?.info({
+    title: '请输入您的出价',
+    content: () => (
+      <NInputNumber v-model:value={value} validator={v => /^[1-9]\d*$/.test(v.toString()) && v.toString().trim() !== ''} />
+    ),
+    positiveText: '确定',
+    onPositiveClick() {
+      if (/^[1-9]\d*$/.test(value.toString()) || value.toString().trim() !== '') {
+        window.$message?.success('出价成功！订单若中标您将会收到通知')
+        changeStatus(row, 'bided')
+      } else {
+        window.$message?.error('请输入正确的出价')
+      }
+    },
+    negativeText: '取消',
+  })
 }
-export function useHandleOrder(columnSrcs: ColumnSrcItem[], changeStatus: Function, filter?: Filter, isFac?: boolean): DataTableColumn {
+
+function schedule(row: InternalRowData, changeStatus: Function) {
+  window.$dialog?.info({
+    title: '请输入您的进度',
+    positiveText: '确定',
+    onPositiveClick() {
+      window.$message?.success('操作成功')
+      changeStatus(row, 'producing')
+    }
+  })
+}
+export function useHandleOrder(columnSrcs: ColumnSrcItem[], changeStatus: Function, filter?: Filter, isFac?: boolean, isBided?: boolean): DataTableColumn {
   return {
     title: '操作',
     key: 'option',
@@ -200,7 +229,7 @@ export function useHandleOrder(columnSrcs: ColumnSrcItem[], changeStatus: Functi
         case 'biding':
           return isFac ? (
             <div class="flex justify-evenly" >
-              <NButton secondary strong type="tertiary" onClick={() => bid(row, changeStatus, 'produced')} >投标</NButton>
+              <NButton secondary strong type="success" onClick={() => bid(row, changeStatus)} >投标</NButton>
             </div>
           ) : (
             <NSpace>
@@ -213,11 +242,26 @@ export function useHandleOrder(columnSrcs: ColumnSrcItem[], changeStatus: Functi
             </NSpace>
           )
         case 'bided':
-          return createBidDetail(row)
+          return isFac ? (
+            isBided ? (<div>
+              <NButton secondary strong onClick={() => schedule(row, changeStatus)} type="info">
+                排产
+              </NButton>
+            </div>) : (
+              <div class="flex justify-evenly" >
+                <NButton secondary strong type="success" disabled onClick={() => bid(row, changeStatus)} >已投标</NButton>
+              </div>
+            )) : createBidDetail(row)
+        case 'scheduled':
+          return isFac ? (
+            <div class="flex justify-evenly" >
+              <NButton secondary strong type="success" disabled onClick={() => bid(row, changeStatus)} >已投标</NButton>
+            </div>
+          ) : createBidDetail(row)
         case 'producing':
           return isFac ? (
             <div class="flex justify-evenly" >
-              <NButton secondary strong type="tertiary" onClick={() => change(row, changeStatus, 'produced')} >结束</NButton>
+              <NButton secondary strong color="gold" onClick={() => change(row, changeStatus, 'produced')} >完工</NButton>
             </div>
           ) : (
             <div class="flex justify-evenly" >
@@ -227,7 +271,7 @@ export function useHandleOrder(columnSrcs: ColumnSrcItem[], changeStatus: Functi
         case 'produced':
           return isFac ? (
             <div class="flex justify-evenly" >
-              <NButton secondary strong type="tertiary" onClick={() => change(row, changeStatus, 'shipped')} >发货</NButton>
+              <NButton secondary strong type="warning" onClick={() => change(row, changeStatus, 'shipped')} >发货</NButton>
             </div>
           ) : (
             <div class="flex justify-evenly" >
@@ -236,9 +280,14 @@ export function useHandleOrder(columnSrcs: ColumnSrcItem[], changeStatus: Functi
           )
         case 'shipped':
           return (
-            <div class="flex justify-evenly" >
-              <NButton secondary strong type="success" onClick={() => change(row, changeStatus, 'finished')} >确认收货</NButton>
-            </div>
+            isFac ? (
+              <div class="flex justify-evenly" >
+                <NButton secondary strong type="info" disabled >等待收货</NButton>
+              </div>
+            ) : (
+              <div class="flex justify-evenly" >
+                <NButton secondary strong type="success" onClick={() => change(row, changeStatus, 'finished')} >确认收货</NButton>
+              </div>)
           )
         case 'finished':
           return (<div class="flex justify-evenly" >

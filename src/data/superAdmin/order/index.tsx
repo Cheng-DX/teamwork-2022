@@ -4,7 +4,7 @@ import { createDate } from './core/functions';
 import { names, orderStatus } from './core/data';
 import { columnSrcs } from './core/columns';
 
-function createOrders() {
+function createOrders(isFac?: boolean) {
   const data = [];
   const time = new Date().getTime()
   for (let i = 0; i < 40; i++) {
@@ -18,14 +18,14 @@ function createOrders() {
       receiver: names[i % names.length],
       receiverPhone: '131111111' + (i).toString().padStart(2, '0'),
       address: `地址${i}`,
-      status: orderStatus[i % orderStatus.length].value,
+      status: isFac ? 'biding' : orderStatus[i % orderStatus.length].value,
     })
   }
   return data
 }
 
-export function useOrders(editable?: boolean) {
-  const data = ref(createOrders())
+export function useOrders(editable?: boolean, isFac?: boolean) {
+  const data = ref(createOrders(isFac))
   const columns = useTable(data, columnSrcs, editable)
   return { data, columns, columnSrc: columnSrcs }
 }
