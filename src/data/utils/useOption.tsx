@@ -176,6 +176,9 @@ function change(row: InternalRowData, changeStatus: Function, target: string) {
   })
 }
 
+function bid(row: InternalRowData, changeStatus: Function, target: string) {
+
+}
 export function useHandleOrder(columnSrcs: ColumnSrcItem[], changeStatus: Function, filter?: Filter, isFac?: boolean): DataTableColumn {
   return {
     title: '操作',
@@ -195,7 +198,11 @@ export function useHandleOrder(columnSrcs: ColumnSrcItem[], changeStatus: Functi
             </NSpace>
           )
         case 'biding':
-          return (
+          return isFac ? (
+            <div class="flex justify-evenly" >
+              <NButton secondary strong type="tertiary" onClick={() => bid(row, changeStatus, 'produced')} >投标</NButton>
+            </div>
+          ) : (
             <NSpace>
               {createBidDetail(row)}
               <div class="flex justify-evenly" >
@@ -208,13 +215,21 @@ export function useHandleOrder(columnSrcs: ColumnSrcItem[], changeStatus: Functi
         case 'bided':
           return createBidDetail(row)
         case 'producing':
-          return (
+          return isFac ? (
+            <div class="flex justify-evenly" >
+              <NButton secondary strong type="tertiary" onClick={() => change(row, changeStatus, 'produced')} >结束</NButton>
+            </div>
+          ) : (
             <div class="flex justify-evenly" >
               <NButton secondary strong disabled type="tertiary" >等待生产结束</NButton>
             </div>
           )
         case 'produced':
-          return (
+          return isFac ? (
+            <div class="flex justify-evenly" >
+              <NButton secondary strong type="tertiary" onClick={() => change(row, changeStatus, 'shipped')} >发货</NButton>
+            </div>
+          ) : (
             <div class="flex justify-evenly" >
               <NButton secondary strong disabled type="tertiary" >等待工厂发货</NButton>
             </div>
