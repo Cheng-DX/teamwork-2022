@@ -36,7 +36,6 @@ import QuickTable from '@/components/quickTable/index.vue';
 import { useDelete, useRent, useEdit, type Filter, useConfig } from '@/data/utils/useOption';
 import AddForm from '@/data/utils/AddForm';
 import { RentStatus } from '@/data/superAdmin/equipment';
-import ConfigPanelVue from './components/ConfigPanel.vue';
 import ConfigPanel from './components/ConfigPanel.vue';
 
 const { isFullscreen } = useFullscreen();
