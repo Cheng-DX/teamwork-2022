@@ -1,1 +1,0 @@
-import{u as o}from"./index.d8a8a763.js";import{r}from"./index.332a15a2.js";const s=[{title:"\u5E8F\u53F7",key:"index"},{title:"\u7C7B\u522B\u540D\u79F0",key:"name"}];function u(n){const t=[];for(let e=0;e<10;e++)t.push({index:e+1,name:`${n}\u7C7B\u522B${e}`});return t}function i(n){const t=r(u(n)),e=o(t,s,"index");return{data:t,columns:e}}export{i as u};
