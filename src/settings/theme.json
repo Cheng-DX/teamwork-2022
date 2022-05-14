@@ -3,7 +3,7 @@
 	"darkMode": false,
 	"layout": {
 		"minWidth": 900,
-		"mode": "vertical",
+		"mode": "horizontal",
 		"modeList": [
 			{
 				"value": "vertical",
@@ -92,7 +92,7 @@
 		"mixChildMenuWidth": 200
 	},
 	"menu": {
-		"horizontalPosition": "flex-start",
+		"horizontalPosition": "center",
 		"horizontalPositionList": [
 			{
 				"value": "flex-start",
@@ -109,12 +109,12 @@
 		]
 	},
 	"footer": {
-		"fixed": false,
+		"fixed": true,
 		"height": 48
 	},
 	"page": {
 		"animate": true,
-		"animateMode": "fade-slide",
+		"animateMode": "fade-scale",
 		"animateModeList": [
 			{
 				"value": "fade-slide",

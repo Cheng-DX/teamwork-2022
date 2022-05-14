@@ -1,6 +1,6 @@
 <template>
   <div class="h-full">
-    <quick-table :title="`${prefix}类别管理`" :columns="columns" :data="data" :page-size="5">
+    <quick-table :title="`${prefix}类别管理`" :columns="columns" :data="data" :page-size="15">
       <n-button type="primary" secondary strong @click="handleAdd">{{ `添加${prefix}类别` }}</n-button>
     </quick-table>
   </div>

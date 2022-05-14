@@ -19,7 +19,7 @@ const columnSrcs: ColumnSrcItem[] = [
 
 function createTypes(prefix: string) {
   const productTypes = [];
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 40; i++) {
     productTypes.push({
       index: i + 1,
       name: `${prefix}类别${i}`,

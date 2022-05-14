@@ -1,6 +1,6 @@
 <template>
   <div>
-    <n-card :title="title" class="shadow-sm rounded-16px">
+    <n-card class="shadow-sm rounded-16px h-620px">
       <n-space vertical>
         <slot></slot>
         <n-space justify="space-between">
@@ -13,8 +13,7 @@
             :data="data"
             :flex-height="true"
             :pagination="{ pageSize }"
-            striped
-            :style="{ height: `${height ? height : 480}px` }"
+            :style="{ minHeight: '530px' }"
           />
         </loading-empty-wrapper>
         <slot name="footer"></slot>

@@ -116,7 +116,8 @@ function showRentable() {
   dialog.info({
     title: '租用设备',
     style: {
-      width: '80vw'
+      width: '80vw',
+      height: '700px'
     },
     content: () => {
       return h(QuickTable, {
