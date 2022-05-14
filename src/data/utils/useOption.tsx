@@ -5,6 +5,7 @@ import AddForm from "./AddForm"
 import { ColumnSrcItem } from "./creator"
 import { orderStatus } from "../superAdmin/order/core"
 import { ref } from "vue"
+import SchedulePanel from "@/views/factory-order/produce/components/SchedulePanel.vue"
 
 export interface Filter {
   handler: (row: InternalRowData) => boolean
@@ -200,11 +201,16 @@ function bid(row: InternalRowData, changeStatus: Function) {
 
 function schedule(row: InternalRowData, changeStatus: Function) {
   window.$dialog?.info({
-    title: '请输入您的进度',
-    positiveText: '确定',
+    title: '排产',
+    positiveText: '保存',
     onPositiveClick() {
-      window.$message?.success('操作成功')
+      window.$message?.success('已保存')
       changeStatus(row, 'producing')
+    },
+    negativeText: '取消',
+    content: () => (<SchedulePanel />),
+    style: {
+      width: '70vw'
     }
   })
 }
