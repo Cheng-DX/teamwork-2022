@@ -37,14 +37,14 @@ function getType(status: string) {
   }
 }
 
-const allStatus = [
+export const allStatus = [
   { value: 'opened', label: '闲置中' },
   { value: 'closed', label: '已关机' },
   { value: 'fault', label: '故障中' },
   { value: 'producing', label: '生产中' }
 ];
 
-const allRentStatus = [
+export const allRentStatus = [
   { value: 'rent', label: '租用设备' },
   { value: 'own', label: '自有设备' }
 ];

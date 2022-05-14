@@ -51,7 +51,7 @@ function show() {
     title: '扫码登录',
     content: () =>
       h('img', {
-        src: '/src/assets/images/qrcode.png',
+        src: 'https://s1.ax1x.com/2022/05/14/OcAKQx.png',
         style: {
           width: '100%'
         }

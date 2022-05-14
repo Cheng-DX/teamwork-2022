@@ -3,6 +3,7 @@ import { useTable } from '@/data/utils/useTable'
 import { type InternalRowData } from 'naive-ui/lib/data-table/src/interface';
 import { type ColumnSrcItem } from '@/data/utils/creator';
 import { NButton, NSpace, NTag } from 'naive-ui';
+import { allStatus } from '@/data/superAdmin/equipment';
 
 export enum EquipmentStatus {
   /** 闲置 */
@@ -148,7 +149,7 @@ function createColumns(data: Ref<any[]>) {
       title: '开关机',
       key: 'power',
       renderer: (row: InternalRowData) => {
-        return (<NButton tertiary strong type={row.status === EquipmentStatus.Closed ? 'success' : 'error'} onClick={() => switchStatus(row.id as string, data)}>{row.status === EquipmentStatus.Closed ? '远程开机' : '远程关机'}</NButton>)
+        return (<NButton tertiary strong type={row.status === EquipmentStatus.Closed ? 'success' : 'error'} disabled={row.status !== EquipmentStatus.Closed && row.status !== EquipmentStatus.Opened} onClick={() => switchStatus(row.id as string, data)}>{row.status === EquipmentStatus.Closed ? '远程开机' : '远程关机'}</NButton>)
       },
       form: {
         break: true
@@ -177,7 +178,7 @@ function createEquipments() {
       spec: `规格${i}`,
       factory: '我的工厂',
       description: `描述${i}`,
-      status: EquipmentStatus.Opened,
+      status: allStatus[i % allStatus.length].label,
       source: i % 2 === 0 ? RentStatus.Own : RentStatus.Rent,
     })
   }

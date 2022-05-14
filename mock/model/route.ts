@@ -173,7 +173,7 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
           meta: {
             title: '订单接单',
             requiresAuth: true,
-            icon: 'icon-park-outline:analysis'
+            icon: 'carbon:accumulation-ice'
           }
         },
         {
@@ -183,13 +183,13 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
           meta: {
             title: '订单排产',
             requiresAuth: true,
-            icon: 'icon-park-outline:analysis'
+            icon: 'carbon:carbon-for-ibm-product'
           }
         }
       ],
       meta: {
         title: '订单',
-        icon: 'carbon:analytics',
+        icon: 'carbon:border-full',
         order: 1
       }
     }
