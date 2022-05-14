@@ -14,6 +14,7 @@ function createOrders() {
       number: (i + 1) * Math.round(Math.random() * 5 + 5),
       deliveryDate: createDate(i + Math.random() * 5 + 10),
       bidDeadline: createDate(i),
+      timeRange: [createDate(i), createDate(i + Math.random() * 5 + 10)],
       receiver: names[i % names.length],
       receiverPhone: '131111111' + (i).toString().padStart(2, '0'),
       address: `地址${i}`,

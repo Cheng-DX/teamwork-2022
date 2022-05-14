@@ -2,7 +2,7 @@
   <n-space :vertical="true" :size="16">
     <n-space vertical>
       <quick-table
-        title="全部订单"
+        title="我的订单"
         :columns="columns"
         :data="dispaly"
         :page-size="15"
@@ -31,7 +31,7 @@ import QuickTable from '@/components/quickTable/index.vue';
 import { Filter, useDelete, useHandleOrder } from '@/data/utils/useOption';
 
 const { isFullscreen } = useFullscreen();
-const { data, columns, columnSrc } = useOrders(false, true);
+const { data, columns, columnSrcs: columnSrc } = useOrders(false, true);
 
 const status = ['bided', 'producing', 'produced', 'shipped', 'finished'];
 data.value.forEach((item: InternalRowData) => {

@@ -33,7 +33,7 @@ import { type Filter, useDelete, useHandleOrder } from '@/data/utils/useOption';
 import AddForm from '@/data/utils/AddForm';
 
 const { isFullscreen } = useFullscreen();
-const { data, columns, columnSrc } = useOrders(false);
+const { data, columns, columnSrcs } = useOrders(false);
 
 const search = ref('');
 const dispaly = computed(() => {
@@ -58,7 +58,7 @@ function changeStatus(row: InternalRowData, target: string) {
     order.status = target;
   }
 }
-columns.value.push(useHandleOrder(columnSrc, changeStatus));
+columns.value.push(useHandleOrder(columnSrcs, changeStatus));
 columns.value.push(useDelete(deleteOne, filter));
 
 function deleteOne(row: InternalRowData) {
@@ -67,13 +67,16 @@ function deleteOne(row: InternalRowData) {
     1
   );
 }
+
+const { columnSrcs: columnSrcs2 } = useOrders(false);
 const dialog = useDialog();
 function handleAdd() {
+  console.log(columnSrcs2);
   dialog.success({
     title: '新建订单',
     content: () =>
       h(AddForm, {
-        columnSrcs: columnSrc
+        columnSrcs: columnSrcs2
       })
   });
 }

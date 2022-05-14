@@ -6,6 +6,7 @@ import { ColumnSrcItem } from "./creator"
 import { orderStatus } from "../superAdmin/order/core"
 import { ref } from "vue"
 import SchedulePanel from "@/views/factory-order/produce/components/SchedulePanel.vue"
+import ChooseBidVue from "@/views/dealer-order/components/ChooseBid.vue"
 
 export interface Filter {
   handler: (row: InternalRowData) => boolean
@@ -148,7 +149,10 @@ function createBidDetail(row: InternalRowData) {
   function handleDetail(row: InternalRowData) {
     window.$dialog?.info({
       title: '投标详情',
-      content: () => (<div>投标详情</div>)
+      style: {
+        width: '70vw',
+      },
+      content: () => (<ChooseBidVue />)
     })
   }
   return (<div class="flex justify-evenly" >
@@ -156,6 +160,19 @@ function createBidDetail(row: InternalRowData) {
       投标详情
     </NButton>
   </div>)
+}
+
+export function useChooseBid(chooseFn: DeleteFn): DataTableColumn {
+  return {
+    title: '选标',
+    key: 'choose',
+    align: 'center',
+    render: (row: InternalRowData) => (<div class="flex justify-evenly" >
+      <NButton secondary strong onClick={() => chooseFn(row)} type="success">
+        选标
+      </NButton>
+    </div>)
+  }
 }
 
 function change(row: InternalRowData, changeStatus: Function, target: string) {

@@ -68,6 +68,17 @@ export const columnSrc: ColumnSrcItem[] = [
     }
   },
   {
+    title: '时间范围',
+    key: 'timeRange',
+    renderer: (row: InternalRowData) => {
+      return <NDatePicker v-model:value={row.timeRange} type="datetimerange" ></NDatePicker>
+    },
+    width: '150px',
+    form: {
+      type: 'date',
+    }
+  },
+  {
     title: '收货人',
     key: 'receiver',
   },

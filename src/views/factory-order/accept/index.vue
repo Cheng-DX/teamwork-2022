@@ -30,7 +30,7 @@ import QuickTable from '@/components/quickTable/index.vue';
 import { useHandleOrder } from '@/data/utils/useOption';
 
 const { isFullscreen } = useFullscreen();
-const { data, columns, columnSrc } = useOrders(false, true);
+const { data, columns, columnSrcs } = useOrders(false, true);
 
 const search = ref('');
 const dispaly = computed(() => {
@@ -50,6 +50,6 @@ const index = columns.value.findIndex(item => item.key === 'status');
 if (index > -1) {
   columns.value.splice(index, 1);
 }
-columns.value.push(useHandleOrder(columnSrc, changeStatus, undefined, true));
+columns.value.push(useHandleOrder(columnSrcs, changeStatus, undefined, true));
 </script>
 <style scoped></style>

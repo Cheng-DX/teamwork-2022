@@ -2,7 +2,7 @@ import { ref } from 'vue';
 import { useTable } from '@/data/utils/useTable'
 import { createDate } from './core/functions';
 import { names, orderStatus } from './core/data';
-import { columnSrcs } from './core/columns';
+import { createColumnSrcs } from './core/columns';
 
 function createOrders(isFac?: boolean) {
   const data = [];
@@ -15,6 +15,7 @@ function createOrders(isFac?: boolean) {
       number: (i + 1) * Math.round(Math.random() * 5 + 5),
       deliveryDate: createDate(i + Math.random() * 5 + 10),
       bidDeadline: createDate(i),
+      timeRange: [createDate(i), createDate(i + Math.random() * 5 + 10)],
       receiver: names[i % names.length],
       receiverPhone: '131111111' + (i).toString().padStart(2, '0'),
       address: `地址${i}`,
@@ -26,6 +27,7 @@ function createOrders(isFac?: boolean) {
 
 export function useOrders(editable?: boolean, isFac?: boolean) {
   const data = ref(createOrders(isFac))
+  const columnSrcs = createColumnSrcs()
   const columns = useTable(data, columnSrcs, editable)
-  return { data, columns, columnSrc: columnSrcs }
+  return { data, columns, columnSrcs }
 }

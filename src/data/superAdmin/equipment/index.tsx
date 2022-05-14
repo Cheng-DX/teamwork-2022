@@ -159,9 +159,9 @@ function createEquipments() {
       type: `类别${i}`,
       spec: `规格${i}`,
       description: `描述${i}`,
-      status: EquipmentStatus.Opened,
+      status: allStatus[i % 4].label,
       factory: `云工厂${i}`,
-      rentStatus: RentStatus.Own,
+      rentStatus: allRentStatus[i % 2].label,
     })
   }
   return data

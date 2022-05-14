@@ -1,7 +1,6 @@
 import { formRules } from '@/utils';
 import { FormInst, FormRules, NButton, NDatePicker, NForm, NFormItem, NInput, NInputNumber, NSelect, NSpace } from 'naive-ui';
 import { defineComponent, type DefineComponent, reactive, ref, PropType } from 'vue';
-import { columnSrc } from '../dealer/order/core/columns';
 import { ColumnSrcItem } from './creator';
 
 export interface AddFormProps {
@@ -43,7 +42,10 @@ export default defineComponent({
       });
     }
 
-    for (const columnSrc of props.columnSrcs) {
+
+    const columnSrcCopy = [...props.columnSrcs]
+
+    for (const columnSrc of columnSrcCopy) {
       rules[columnSrc.key] = columnSrc?.form?.type === 'number' ? formRules.biggerThenZeroInt : formRules.notBlank;
       const defaultValue = columnSrc.form?.defaultValue
       if (defaultValue === undefined || defaultValue === null) {
@@ -80,7 +82,6 @@ export default defineComponent({
     }
 
     function switchFormItem(colmunSrc: ColumnSrcItem, model: any) {
-      console.log(colmunSrc)
       const placeholder = colmunSrc?.form?.placeholder || `请${colmunSrc?.form?.type === 'select' ? '选择' : '输入'}${colmunSrc.title}`;
       const disabled = colmunSrc?.form?.disabled || false;
       if (colmunSrc.form?.renderer) {
@@ -108,6 +109,8 @@ export default defineComponent({
               return (<NInputNumber v-model:value={model[colmunSrc.key]} placeholder={placeholder} validator={(v: number) => v > 0} disabled={disabled} class='w-full' />)
             case 'textarea':
               return (<NInput type="textarea" v-model:value={model[colmunSrc.key]} placeholder={placeholder} disabled={disabled} class='w-full' />)
+            case 'daterange':
+              return (<NDatePicker type="daterange" v-model:value={model[colmunSrc.key]} startPlaceholder={colmunSrc?.form?.timerange?.startPlaceholder} endPlaceholder={colmunSrc?.form?.timerange?.endPlaceholder} disabled={disabled} class='w-full' />)
             default:
               return (<NInput v-model:value={model[colmunSrc.key]} placeholder={placeholder} disabled={disabled} class='w-full' />)
           }
