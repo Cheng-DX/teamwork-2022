@@ -3,7 +3,6 @@
     <workbench-header />
     <top-chart />
     <data-card />
-    <bottom-part />
   </n-space>
 </template>
 

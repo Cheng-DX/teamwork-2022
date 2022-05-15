@@ -4,8 +4,8 @@
       <div class="flex-y-center">
         <icon-custom-avatar class="text-70px" />
         <div class="pl-12px">
-          <h3 class="text-18px font-semibold">早安，{{ auth.userInfo.userName }}, 今天又是充满活力的一天！</h3>
-          <p class="leading-30px text-[#999]">今日多云转晴，20℃ - 25℃！</p>
+          <h3 class="text-18px font-semibold">你好呀👋{{ auth.userInfo.userName }}, 今天又是充满活力的一天！</h3>
+          <p class="leading-30px text-[#999]">今日多云转晴，20℃ - 25℃</p>
         </div>
       </div>
       <n-space :size="24" :wrap="false">
@@ -17,7 +17,6 @@
           class="whitespace-nowrap"
         >
           <n-number-animation :from="0" :to="Number(item.value)" show-separator />
-          <template #suffix>{{ item.detail }}</template>
         </n-statistic>
       </n-space>
     </div>
@@ -26,35 +25,43 @@
 
 <script setup lang="ts">
 import { useAuthStore } from '@/store';
+import { createSrc } from '@/views/dashboard/components/utils/data';
 
 interface StatisticData {
   id: number;
   label: string;
   value: string;
-  detail: string;
 }
 
 const auth = useAuthStore();
 
+const src = createSrc();
 const statisticData: StatisticData[] = [
   {
     id: 0,
     label: '新增用户',
-    value: '15',
-    detail: '位'
+    value: '15'
   },
   {
     id: 1,
     label: '新增订单',
-    value: '5890',
-    detail: '单'
+    value: '5890'
   },
   {
     id: 2,
     label: '总流水',
-    value: '8835048',
-    detail: '元'
+    value: '8835048'
+  },
+  {
+    id: 3,
+    label: '总收入',
+    value: '8835048'
   }
 ];
+
+Object.keys(src).forEach((key, index) => {
+  statisticData[index].label = key;
+  statisticData[index].value = src[key].toString();
+});
 </script>
 <style scoped></style>

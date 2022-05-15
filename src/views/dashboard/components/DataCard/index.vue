@@ -19,6 +19,7 @@
 
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
+import { createSrc } from '../utils/data';
 import { GradientBg } from './components';
 
 interface CardData {
@@ -33,36 +34,42 @@ interface CardData {
 const cardData: CardData[] = [
   {
     id: 'visit',
-    title: '访问量',
-    value: 2395,
+    title: '',
+    value: 0,
     unit: '',
     colors: ['#ec4786', '#b955a4'],
     icon: 'ant-design:bar-chart-outlined'
   },
   {
     id: 'amount',
-    title: '成交额',
-    value: 8835048,
-    unit: '￥',
+    title: '',
+    value: 0,
+    unit: '',
     colors: ['#865ec0', '#5144b4'],
     icon: 'ant-design:money-collect-outlined'
   },
   {
     id: 'download',
-    title: '下载数',
-    value: 666666,
+    title: '',
+    value: 0,
     unit: '',
     colors: ['#56cdf3', '#719de3'],
     icon: 'carbon:document-download'
   },
   {
     id: 'trade',
-    title: '成交数',
-    value: 999999,
+    title: '',
+    value: 0,
     unit: '',
     colors: ['#fcbc25', '#f68057'],
     icon: 'ant-design:trademark-circle-outlined'
   }
 ];
+
+const src = createSrc();
+Object.keys(src).forEach((key, i) => {
+  cardData[i].title = key;
+  cardData[i].value = src[key];
+});
 </script>
 <style scoped></style>

@@ -1,17 +1,41 @@
 <template>
   <n-grid :x-gap="16" :y-gap="16" :item-responsive="true">
-    <n-grid-item span="0:24 640:24 1024:16">
+    <n-grid-item span="0:24 640:24 1024:14">
       <n-card :bordered="false" class="rounded-16px shadow-sm">
         <div class="flex w-full h-360px">
-          <div class="w-200px h-full py-12px">
+          <div class="w-220px h-full py-12px">
             <h3 class="text-16px font-bold">数据简报</h3>
-            <p class="text-[#aaa]">在过去的10天内</p>
+            <p class="text-[#aaa]">每5s更新</p>
             <h3 class="pt-36px text-24px font-bold">
-              <count-to prefix="￥" :start-value="0" :end-value="74895137" />
+              <div class="flex justify-start">
+                <count-to prefix="￥" :start-value="0" :end-value="total" />
+                <n-button
+                  class="ml-5px"
+                  round
+                  secondary
+                  type="success"
+                  size="tiny"
+                  style="font-size: 13px; font-weight: 100"
+                  >+{{ label.value.total }}</n-button
+                >
+              </div>
             </h3>
             <p class="text-[#aaa]">订单总金额</p>
             <h3 class="pt-36px text-24px font-bold">
-              <count-to prefix="￥" :start-value="0" :end-value="87492" />
+              <div class="flex justify-start">
+                <count-to prefix="￥" :start-value="0" :end-value="average" />
+                <n-button
+                  class="ml-5px"
+                  round
+                  secondary
+                  :type="label.value.average > 0 ? 'success' : 'error'"
+                  size="tiny"
+                  style="font-size: 13px; font-weight: 100"
+                >
+                  {{ label.value.average > 0 ? '↑' : '↓' }}
+                  {{ Math.abs(label.value.average) }}</n-button
+                >
+              </div>
             </h3>
             <p class="text-[#aaa]">平均成交金额</p>
             <n-button class="mt-24px" type="primary">Last Month Summary</n-button>
@@ -22,7 +46,7 @@
         </div>
       </n-card>
     </n-grid-item>
-    <n-grid-item span="0:24 640:24 1024:8">
+    <n-grid-item span="0:24 640:24 1024:10">
       <n-card :bordered="false" class="rounded-16px shadow-sm">
         <div ref="pieRef" class="w-full h-360px"></div>
       </n-card>
@@ -32,9 +56,41 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { useThemeStore } from '@/store';
+import { useAuthStore, useThemeStore } from '@/store';
 import { useEcharts, type ECOption } from '@/hooks';
 
+const total = ref(1000000);
+const average = ref(20000);
+
+const label = ref({
+  value: {
+    total: 72812,
+    average: 203
+  },
+  total: '+',
+  average: '↑'
+});
+
+const autoIncerment = () => {
+  setTimeout(() => {
+    const mount = Math.random();
+
+    const a = Math.floor(mount * 100000);
+    const b = Math.floor(mount * 100 - 50);
+
+    label.value.value = {
+      total: a,
+      average: b
+    };
+
+    total.value += a;
+    average.value += b;
+    autoIncerment();
+  }, 5000);
+};
+autoIncerment();
+
+const auth = useAuthStore();
 const theme = useThemeStore();
 
 const darkMode = computed(() => theme.darkMode);
@@ -47,6 +103,32 @@ function createXData() {
   return xData;
 }
 
+function createYData() {
+  const yData = [];
+  for (let i = 0; i < 10; i++) {
+    yData.push(Math.floor(Math.random() * 100000));
+  }
+  return yData;
+}
+
+function creatDetail(isDealer: boolean) {
+  const detail = [];
+  if (isDealer) {
+    detail.push({ value: 3, name: '未发布' });
+    detail.push({ value: 38, name: '投标中' });
+    detail.push({ value: 28, name: '投标结束' });
+    detail.push({ value: 11, name: '生产中' });
+    detail.push({ value: 10, name: '已完工' });
+    detail.push({ value: 10, name: '已发货' });
+  } else {
+    detail.push({ value: 3, name: '新增' });
+    detail.push({ value: 28, name: '闲置中' });
+    detail.push({ value: 58, name: '生产中' });
+    detail.push({ value: 11, name: '已关机' });
+  }
+  return detail;
+}
+
 const { domRef: lineRef } = useEcharts(
   ref<ECOption>({
     tooltip: {
@@ -57,9 +139,6 @@ const { domRef: lineRef } = useEcharts(
           backgroundColor: '#6a7985'
         }
       }
-    },
-    legend: {
-      data: ['订单数量']
     },
     grid: {
       left: '3%',
@@ -85,7 +164,7 @@ const { domRef: lineRef } = useEcharts(
     series: [
       {
         color: '#8e9dff',
-        name: '订单数量',
+        name: '示例',
         type: 'line',
         smooth: true,
         stack: 'Total',
@@ -111,7 +190,7 @@ const { domRef: lineRef } = useEcharts(
         emphasis: {
           focus: 'series'
         },
-        data: [4623, 6145, 6268, 6411, 1890, 4251, 2978, 3880, 3606, 5890]
+        data: createYData()
       }
     ]
   }),
@@ -121,7 +200,7 @@ const { domRef: lineRef } = useEcharts(
 const { domRef: pieRef } = useEcharts(
   ref<ECOption>({
     title: {
-      text: '设备情况简报'
+      text: auth.userInfo.userRole === 'dealer' ? '订单状态简报' : '设备情况简报'
     },
     legend: {
       bottom: '1%',
@@ -132,7 +211,6 @@ const { domRef: pieRef } = useEcharts(
     },
     series: [
       {
-        color: ['#5da8ff', '#8e9dff', '#fedc69', '#26deca', '#ff5c5c'],
         name: '设备',
         type: 'pie',
         radius: ['45%', '75%'],
@@ -157,12 +235,7 @@ const { domRef: pieRef } = useEcharts(
         labelLine: {
           show: false
         },
-        data: [
-          { value: 3, name: '新增' },
-          { value: 28, name: '闲置中' },
-          { value: 58, name: '生产中' },
-          { value: 11, name: '已关机' }
-        ]
+        data: creatDetail(auth.userInfo.userRole === 'dealer')
       }
     ]
   }),
