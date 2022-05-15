@@ -1,0 +1,1 @@
+import{r as l}from"./index.ce602150.js";function a(t=!1){const o=l(t);function e(f){o.value=f}function n(){e(!0)}function u(){e(!1)}function s(){e(!o.value)}return{bool:o,setBool:e,setTrue:n,setFalse:u,toggle:s}}export{a as u};
