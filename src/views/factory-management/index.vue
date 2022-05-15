@@ -46,12 +46,13 @@ function deleteOne(row: InternalRowData) {
   );
 }
 
+const { columnSrcs: columnSrc } = useFactories();
 function handleAdd() {
   dialog.info({
     title: '新建工厂',
     content: () =>
       h(AddForm, {
-        columnSrcs
+        columnSrcs: columnSrc
       })
   });
 }

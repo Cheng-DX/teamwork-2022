@@ -71,7 +71,6 @@ function deleteOne(row: InternalRowData) {
 const { columnSrcs: columnSrcs2 } = useOrders(false);
 const dialog = useDialog();
 function handleAdd() {
-  console.log(columnSrcs2);
   dialog.success({
     title: '新建订单',
     content: () =>

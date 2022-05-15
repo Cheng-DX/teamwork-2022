@@ -324,7 +324,7 @@ export function useHandleOrder(columnSrcs: ColumnSrcItem[], changeStatus: Functi
   }
 }
 
-export function useConfig(action: Function) {
+export function useConfig(action: Function): DataTableColumn {
   return {
     title: '配置产品',
     key: 'config',

@@ -85,13 +85,15 @@ function deleteOne(row: InternalRowData) {
     1
   );
 }
+const { columnSrcs: columnsSrc } = useMyFactory(true);
+
 const dialog = useDialog();
 function handleAdd() {
   dialog.success({
     title: '新增设备',
     content: () =>
       h(AddForm, {
-        columnSrcs
+        columnSrcs: columnsSrc
       })
   });
 }
