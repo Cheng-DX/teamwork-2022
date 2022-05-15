@@ -116,6 +116,6 @@ function createFactories() {
 export function useFactories() {
   const data = ref(createFactories())
   const columnSrcs = createColumns(data)
-  const columns = useTable(data, columnSrcs, true)
+  const columns = useTable(data, columnSrcs, false)
   return { data, columns, columnSrcs }
 }

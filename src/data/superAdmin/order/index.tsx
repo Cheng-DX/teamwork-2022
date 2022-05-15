@@ -28,6 +28,6 @@ function createOrders(isFac?: boolean) {
 export function useOrders(editable?: boolean, isFac?: boolean) {
   const data = ref(createOrders(isFac))
   const columnSrcs = createColumnSrcs()
-  const columns = useTable(data, columnSrcs, editable)
+  const columns = useTable(data, columnSrcs, false)
   return { data, columns, columnSrcs }
 }

@@ -170,6 +170,6 @@ function createEquipments() {
 export function useEquipments() {
   const data = ref(createEquipments())
   const columnSrcs = createColumns(data)
-  const columns = useTable(data, columnSrcs, true)
+  const columns = useTable(data, columnSrcs, false)
   return { data, columns, columnSrcs }
 }

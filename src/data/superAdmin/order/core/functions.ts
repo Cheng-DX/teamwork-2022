@@ -1,9 +1,9 @@
 export function switchType(type: string) {
   switch (type) {
     case 'biding':
-      return 'warning';
+      return 'primary';
     case 'bided':
-      return 'default';
+      return 'success';
     case 'finished':
       return 'success';
     case 'producing':
@@ -11,6 +11,10 @@ export function switchType(type: string) {
     case 'unpublished':
       return 'warning';
     case 'published':
+      return 'primary';
+    case 'shipped':
+      return 'default';
+    case 'produced':
       return 'primary';
     default:
       return 'error';

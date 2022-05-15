@@ -91,7 +91,11 @@ const rules: FormRules = {
 const agreement = ref(false);
 
 function handleSmsCode() {
-  start();
+  if (model.phone.match(formRules.phone[1].pattern as RegExp)) {
+    start();
+  } else {
+    window?.$message?.warning('请输入正确的手机号码');
+  }
 }
 
 watch(

@@ -36,6 +36,7 @@ export default defineComponent({
       formRef.value.validate(errors => {
         if (!errors) {
           window.$message?.success('Succeed!');
+          window.$dialog?.destroyAll()
         } else {
           window.$message?.error('未通过验证');
         }

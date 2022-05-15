@@ -188,6 +188,6 @@ function createEquipments() {
 export function useMyFactory(editable?: boolean) {
   const data = ref(createEquipments())
   const columnSrcs = createColumns(data)
-  const columns = useTable(data, columnSrcs, editable)
+  const columns = useTable(data, columnSrcs, false)
   return { data, columns, columnSrcs }
 }

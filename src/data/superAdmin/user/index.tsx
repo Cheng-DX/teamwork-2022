@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { useTable } from '@/data/utils/useTable'
 import { type InternalRowData } from 'naive-ui/lib/data-table/src/interface';
 import { type ColumnSrcItem } from '@/data/utils/creator';
-import { NTag } from 'naive-ui';
+import { NInput, NTag } from 'naive-ui';
 
 const columnSrc: ColumnSrcItem[] = [
   {
@@ -13,10 +13,21 @@ const columnSrc: ColumnSrcItem[] = [
   {
     title: '电话号码',
     key: 'phone',
+    form: {
+      type: 'input'
+    }
   },
   {
-    title: '邮箱',
-    key: 'email',
+    title: '密码',
+    key: 'password',
+    renderer: (row: { password: any; }) => {
+      return <NInput type='password' show-password-on="mousedown" value={row.password} />
+    },
+    form: {
+      renderer: (value) => {
+        return <NInput type='password' show-password-on="click" v-model:value={value} />
+      },
+    }
   },
   {
     title: '工厂名/经销商代号',
@@ -27,6 +38,18 @@ const columnSrc: ColumnSrcItem[] = [
     key: 'role',
     renderer: (row: InternalRowData) => {
       return (<NTag type={_switchColor(row.role as string)}>{row.role}</NTag>)
+    },
+    form: {
+      type: 'select',
+      options: [
+        {
+          label: '云工厂管理员',
+          value: EnumUserRole.admin
+        }, {
+          label: '经销商',
+          value: EnumUserRole.dealer
+        }
+      ],
     }
   },
 ]
@@ -47,19 +70,19 @@ function createUsers() {
   users.push({
     username: 'admin',
     phone: '16666666666',
-    email: "chengdx0925@126.com",
+    password: "chengdx0925@126.com",
     name: 'super admin',
     role: EnumUserRole.super,
   })
 
   for (let i = 0; i < 10; i++) {
     const username = `user${i}`;
-    const email = `${username}@cloudFac.com`;
+    const password = `${username}@cloudFac.com`;
     const phone = `13${i.toString().repeat(9)}`;
     users.push({
       username,
       phone,
-      email,
+      password,
       name: `${username}的${i % 2 == 0 ? '工厂' : '店铺'}`,
       role: i % 2 == 0 ? EnumUserRole.admin : EnumUserRole.dealer,
     })
@@ -69,6 +92,6 @@ function createUsers() {
 
 export function useUsers() {
   const data = ref(createUsers())
-  const columns = useTable(data, columnSrc, true)
-  return { data, columns, columnSrc }
+  const columns = useTable(data, columnSrc, false)
+  return { data, columns, columnSrcs: columnSrc }
 }

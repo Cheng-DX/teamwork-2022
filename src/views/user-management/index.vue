@@ -24,9 +24,9 @@ import { EnumUserRole } from '@/enum';
 import { useUsers } from '@/data/superAdmin/user';
 import { Register } from '@/views/system-view/login/components';
 import QuickTable from '@/components/quickTable/index.vue';
-import { Filter, useDelete } from '@/data/utils/useOption';
+import { Filter, useDelete, useEdit } from '@/data/utils/useOption';
 
-const { data, columns } = useUsers();
+const { data, columns, columnSrcs } = useUsers();
 const dialog = useDialog();
 const message = useMessage();
 
@@ -43,10 +43,12 @@ const dispaly = computed(() => {
 const filter: Filter = {
   handler: row => row.role !== EnumUserRole.super,
   rejectAction: () => {
-    message.error('不能删除超级管理员');
+    message.error('不能对超级管理员执行该操作');
   },
   returnImdiately: true
 };
+
+columns.value.push(useEdit(columnSrcs, filter));
 columns.value.push(useDelete(deleteOne, filter));
 
 function deleteOne(row: InternalRowData) {
