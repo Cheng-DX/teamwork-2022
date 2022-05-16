@@ -131,7 +131,7 @@ function createColumns(data: Ref<any[]>) {
       title: '开关机',
       key: 'power',
       renderer: (row: InternalRowData) => {
-        return (<NButton tertiary strong type={row.status === EquipmentStatus.Closed ? 'success' : 'error'} onClick={() => switchStatus(row.id as string, data)}>{row.status === EquipmentStatus.Closed ? '远程开机' : '远程关机'}</NButton>)
+        return (<NButton tertiary strong disabled={row.status !== EquipmentStatus.Closed && row.status !== EquipmentStatus.Opened} type={row.status === EquipmentStatus.Closed ? 'success' : 'error'} onClick={() => switchStatus(row.id as string, data)}>{row.status === EquipmentStatus.Closed ? '远程开机' : '远程关机'}</NButton>)
       },
       form: {
         break: true
